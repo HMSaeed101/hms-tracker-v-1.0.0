@@ -1,0 +1,93 @@
+/* base/variables.css */
+:root {
+  /* ── Colors — dark mode first ── */
+  --color-bg-primary:    #1A1A2E;  /* deep navy — app background */
+  --color-bg-secondary:  #16213E;  /* card background */
+  --color-bg-tertiary:   #0F3460;  /* elevated surface */
+  --color-accent:        #C9A84C;  /* gold — hero numbers, CTAs */
+  --color-accent-soft:   #F5DFA0;  /* soft gold — velocity positive */
+  --color-text-primary:  #F0EAD6;  /* warm white — primary text */
+  --color-text-secondary:#A8A8B3;  /* muted — labels, metadata */
+  --color-success:       #10B981;  /* green — positive velocity, goals */
+  --color-danger:        #EF4444;  /* red — negative velocity, overdue */
+  --color-warning:       #F59E0B;  /* amber — stale rates, near limit */
+  --color-border:        rgba(201,168,76,0.15);
+  --color-overlay:       rgba(10,10,20,0.85);
+
+  /* ── Spacing scale ── */
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  32px;
+  --space-2xl: 48px;
+
+  /* ── Radius ── */
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   20px;
+  --radius-full: 9999px;
+
+  /* ── Typography ── */
+  --font-sans: 'Sora', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* ── Shadows ── */
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.35);
+  --shadow-modal: 0 8px 48px rgba(0,0,0,0.6);
+  --shadow-fab: 0 6px 24px rgba(201,168,76,0.4);
+
+  /* ── Transitions ── */
+  --transition-fast: 150ms ease;
+  --transition-mid:  250ms ease;
+  --transition-slow: 400ms ease;
+
+  /* ── Category colors (expenses & goals) ── */
+  --cat-myself:     #7C3AED;
+  --cat-food:       #F59E0B;
+  --cat-education:  #3B82F6;
+  --cat-unexpected: #EF4444;
+  --cat-other:      #6B7280;
+  --cat-invest-lt:  #60A5FA;
+
+  /* ── Navbar ── */
+  --navbar-height: 64px;
+  --bottom-nav-height: 68px;
+}
+
+/* ── Light mode fallback ── */
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-bg-primary:    #F8F9FF;
+    --color-bg-secondary:  #FFFFFF;
+    --color-bg-tertiary:   #EEF0FF;
+    --color-text-primary:  #1A1A2E;
+    --color-text-secondary:#6B7280;
+    --color-border:        rgba(15,52,96,0.12);
+    --color-overlay:       rgba(255,255,255,0.92);
+    --shadow-card: 0 2px 12px rgba(0,0,0,0.08);
+  }
+}
+
+/* Manual dark mode class override */
+[data-theme="dark"] {
+  --color-bg-primary:    #1A1A2E;
+  --color-bg-secondary:  #16213E;
+  --color-bg-tertiary:   #0F3460;
+  --color-text-primary:  #F0EAD6;
+  --color-text-secondary:#A8A8B3;
+  --color-border:        rgba(201,168,76,0.15);
+  --color-overlay:       rgba(10,10,20,0.85);
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.35);
+}
+
+[data-theme="light"] {
+  --color-bg-primary:    #F8F9FF;
+  --color-bg-secondary:  #FFFFFF;
+  --color-bg-tertiary:   #EEF0FF;
+  --color-text-primary:  #1A1A2E;
+  --color-text-secondary:#6B7280;
+  --color-border:        rgba(15,52,96,0.12);
+  --color-overlay:       rgba(255,255,255,0.92);
+  --shadow-card: 0 2px 12px rgba(0,0,0,0.08);
+}

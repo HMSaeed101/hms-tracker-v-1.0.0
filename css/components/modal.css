@@ -1,0 +1,112 @@
+/* components/modal.css */
+
+/* Backdrop */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--color-overlay);
+  z-index: 200;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.modal-backdrop.open {
+  display: flex;
+  animation: backdropIn var(--transition-mid) ease both;
+}
+
+@keyframes backdropIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Bottom sheet */
+.modal {
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  width: 100%;
+  max-width: 520px;
+  max-height: 90dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: env(safe-area-inset-bottom);
+  animation: sheetIn var(--transition-slow) cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+@keyframes sheetIn {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+/* Drag handle */
+.modal::before {
+  content: '';
+  display: block;
+  width: 36px;
+  height: 4px;
+  background: var(--color-bg-tertiary);
+  border-radius: var(--radius-full);
+  margin: var(--space-md) auto var(--space-sm);
+}
+
+/* Modal header */
+.modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-lg) var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.modal__title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.modal__close {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-secondary);
+  transition: background var(--transition-fast);
+}
+
+.modal__close:hover { background: var(--color-bg-tertiary); }
+
+/* Modal body */
+.modal__body {
+  padding: var(--space-lg);
+}
+
+/* Modal tabs */
+.modal-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--color-border);
+  padding: 0 var(--space-lg);
+  gap: var(--space-sm);
+}
+
+.modal-tab {
+  padding: var(--space-sm) var(--space-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  border-bottom: 2px solid transparent;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+  white-space: nowrap;
+}
+
+.modal-tab.active {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+
+.modal-tab-panel { display: none; padding: var(--space-lg); }
+.modal-tab-panel.active { display: block; }

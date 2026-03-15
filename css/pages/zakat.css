@@ -1,0 +1,158 @@
+/* pages/zakat.css */
+
+/* Zakat status hero */
+.zakat-hero {
+  background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(15,52,96,0.6));
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-md);
+  text-align: center;
+}
+
+.zakat-hero__status {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: var(--space-sm);
+}
+
+.zakat-hero__amount {
+  font-family: var(--font-mono);
+  font-size: clamp(1.75rem, 7vw, 2.5rem);
+  font-weight: 700;
+  color: var(--color-accent);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: var(--space-sm);
+}
+
+.zakat-hero__label {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.zakat-hero__projection {
+  margin-top: var(--space-md);
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  background: rgba(201,168,76,0.06);
+  border-radius: var(--radius-sm);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.zakat-hero__projection strong {
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+}
+
+/* Nisab tracker */
+.nisab-card {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-md);
+}
+
+.nisab-toggle {
+  display: flex;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-md);
+}
+
+.nisab-toggle-btn {
+  flex: 1;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  transition: all var(--transition-fast);
+}
+
+.nisab-toggle-btn.active {
+  background: rgba(201,168,76,0.15);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+/* Hawl countdown */
+.hawl-countdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  margin: var(--space-lg) 0;
+}
+
+.hawl-unit {
+  text-align: center;
+}
+
+.hawl-unit__value {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  line-height: 1;
+}
+
+.hawl-unit__label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+}
+
+.hawl-divider {
+  font-size: 1.5rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 12px;
+}
+
+/* Payment log */
+.payment-log-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: var(--space-md) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.payment-log-item:last-child { border-bottom: none; }
+
+.payment-log-item__recipient {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.payment-log-item__date {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+}
+
+.payment-log-item__amount {
+  font-family: var(--font-mono);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--color-success);
+}
+
+/* Sadaqah section */
+.sadaqah-total {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-success);
+  text-align: center;
+  margin: var(--space-sm) 0;
+}

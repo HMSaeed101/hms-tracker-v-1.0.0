@@ -1,0 +1,36 @@
+/* components/fab.css */
+.fab {
+  position: fixed;
+  bottom: calc(var(--bottom-nav-height) + var(--space-md));
+  left: 50%;
+  transform: translateX(-50%);
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-full);
+  background: var(--color-accent);
+  color: var(--color-bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-fab);
+  z-index: 110;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.fab svg { width: 26px; height: 26px; }
+
+.fab:hover, .fab:active {
+  transform: translateX(-50%) scale(1.08);
+  box-shadow: 0 8px 32px rgba(201,168,76,0.55);
+}
+
+.fab:active {
+  transform: translateX(-50%) scale(0.96);
+}
+
+/* FAB icon rotation on open */
+.fab.open svg {
+  transform: rotate(45deg);
+  transition: transform var(--transition-mid);
+}

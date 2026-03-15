@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HMS Tracker — Test Runner</title>
+  <style>
+    body { font-family: monospace; background: #1A1A2E; color: #F0EAD6; padding: 24px; }
+    h1   { color: #C9A84C; margin-bottom: 16px; }
+    p    { color: #A8A8B3; margin-bottom: 24px; }
+    .hint{ background: #16213E; border: 1px solid rgba(201,168,76,0.2); border-radius: 8px; padding: 16px; color: #F0EAD6; }
+    code { color: #C9A84C; }
+  </style>
+</head>
+<body>
+  <h1>HMS Tracker · Test Runner</h1>
+  <p>Open DevTools → Console to see test results. All 3 suites run automatically.</p>
+  <div class="hint">
+    <strong>Running:</strong><br>
+    &nbsp;&nbsp;• <code>netWorthCalc.test.js</code> — net worth, velocity, sparkline<br>
+    &nbsp;&nbsp;• <code>zakatCalc.test.js</code> — eligible assets, zakat due, nisab, projection<br>
+    &nbsp;&nbsp;• <code>currencyConverter.test.js</code> — formatting, parsing, stale rates<br>
+    <br>
+    <strong>Serve with:</strong> <code>npx serve .</code> from the project root, then open
+    <code>http://localhost:3000/tests/runner.html</code>
+  </div>
+  <script type="module">
+    async function runSuite(name, path) {
+      console.group(`══ ${name} ══`);
+      try {
+        await import(path);
+      } catch(e) {
+        console.error(`Failed to load ${name}:`, e);
+      }
+      console.groupEnd();
+    }
+
+    (async () => {
+      await runSuite('netWorthCalc',      './netWorthCalc.test.js');
+      await runSuite('zakatCalc',         './zakatCalc.test.js');
+      await runSuite('currencyConverter', './currencyConverter.test.js');
+      console.log('\n══ All suites complete ══');
+    })();
+  </script>
+</body>
+</html>

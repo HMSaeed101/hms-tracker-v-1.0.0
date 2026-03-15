@@ -1,0 +1,72 @@
+/* base/typography.css */
+body {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
+}
+
+/* Headings */
+h1 { font-size: 1.75rem; font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
+h2 { font-size: 1.375rem; font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
+h3 { font-size: 1.125rem; font-weight: 600; line-height: 1.4; }
+h4 { font-size: 1rem; font-weight: 600; }
+h5 { font-size: 0.875rem; font-weight: 600; }
+
+/* Money / amounts — monospace */
+.amount, .mono, [data-amount] {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* Hero number */
+.hero-number {
+  font-family: var(--font-mono);
+  font-size: clamp(1.75rem, 6vw, 2.5rem);
+  font-weight: 700;
+  color: var(--color-accent);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+/* Labels */
+.label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+/* Caption */
+.caption {
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+/* Section title */
+.section-title {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  padding: var(--space-md) 0 var(--space-sm);
+}
+
+/* Velocity text */
+.velocity-positive { color: var(--color-accent-soft); }
+.velocity-negative { color: var(--color-danger); }
+
+/* Utility */
+.text-accent   { color: var(--color-accent); }
+.text-success  { color: var(--color-success); }
+.text-danger   { color: var(--color-danger); }
+.text-warning  { color: var(--color-warning); }
+.text-muted    { color: var(--color-text-secondary); }
+.text-center   { text-align: center; }
+.font-bold     { font-weight: 700; }
+.font-medium   { font-weight: 500; }

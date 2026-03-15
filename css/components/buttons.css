@@ -1,0 +1,75 @@
+/* components/buttons.css */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: 0 var(--space-lg);
+  height: 48px;
+  border-radius: var(--radius-md);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  transition: opacity var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+  min-width: 0;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.4; pointer-events: none; }
+
+/* Primary */
+.btn--primary {
+  background: var(--color-accent);
+  color: var(--color-bg-primary);
+  box-shadow: 0 4px 16px rgba(201,168,76,0.3);
+}
+.btn--primary:hover { box-shadow: 0 6px 24px rgba(201,168,76,0.45); }
+
+/* Secondary */
+.btn--secondary {
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+}
+.btn--secondary:hover { background: var(--color-bg-tertiary); border-color: var(--color-accent); }
+
+/* Danger */
+.btn--danger {
+  background: rgba(239,68,68,0.12);
+  color: var(--color-danger);
+  border: 1px solid rgba(239,68,68,0.3);
+}
+.btn--danger:hover { background: rgba(239,68,68,0.2); }
+
+/* Ghost */
+.btn--ghost {
+  background: transparent;
+  color: var(--color-accent);
+}
+.btn--ghost:hover { background: rgba(201,168,76,0.08); }
+
+/* Full width */
+.btn--full { width: 100%; }
+
+/* Small */
+.btn--sm {
+  height: 36px;
+  padding: 0 var(--space-md);
+  font-size: 0.8125rem;
+  border-radius: var(--radius-sm);
+}
+
+/* Icon button */
+.btn--icon {
+  width: 48px;
+  padding: 0;
+}
+
+/* Button group */
+.btn-group {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.btn-group .btn { flex: 1; }

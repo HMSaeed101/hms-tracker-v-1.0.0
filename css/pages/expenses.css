@@ -1,0 +1,99 @@
+/* pages/expenses.css */
+.month-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+.month-nav__month {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.month-nav__btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.month-nav__btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* Expense summary row */
+.expense-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+/* Category dot */
+.cat-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.cat-dot--myself     { background: var(--cat-myself); }
+.cat-dot--food       { background: var(--cat-food); }
+.cat-dot--education  { background: var(--cat-education); }
+.cat-dot--unexpected { background: var(--cat-unexpected); }
+.cat-dot--other      { background: var(--cat-other); }
+
+/* Bar chart canvas */
+.chart-wrap {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+  overflow: hidden;
+}
+
+#expenses-chart {
+  width: 100%;
+  height: 140px;
+  display: block;
+}
+
+/* Filter chips */
+.filter-chips {
+  display: flex;
+  gap: var(--space-xs);
+  overflow-x: auto;
+  padding-bottom: var(--space-xs);
+  margin-bottom: var(--space-md);
+  scrollbar-width: none;
+}
+.filter-chips::-webkit-scrollbar { display: none; }
+
+.filter-chip {
+  padding: 5px var(--space-md);
+  border-radius: var(--radius-full);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  min-height: 32px;
+}
+
+.filter-chip.active {
+  background: rgba(201,168,76,0.15);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}

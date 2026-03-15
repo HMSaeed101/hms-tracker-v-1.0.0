@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#C9A84C">
+  <meta name="description" content="HMS Tracker — Personal Finance Command Center">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="HMS">
+  <title>HMS Tracker</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .hidden { display: none !important; }
+    #app-shell.hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+    PIN SCREEN
+══════════════════════════════════════════ -->
+<div id="pin-screen" role="dialog" aria-modal="true" aria-labelledby="pin-title">
+  <div class="pin-screen__logo">HMS</div>
+  <h1 class="pin-screen__title" id="pin-title">Welcome back</h1>
+  <p class="pin-screen__subtitle" id="pin-subtitle">Enter your PIN to unlock</p>
+
+  <div class="pin-dots" aria-hidden="true">
+    <div class="pin-dot"></div>
+    <div class="pin-dot"></div>
+    <div class="pin-dot"></div>
+    <div class="pin-dot"></div>
+  </div>
+
+  <p class="pin-error" id="pin-error" role="alert" aria-live="assertive"></p>
+  <p class="pin-cooldown" id="pin-cooldown" role="status" aria-live="polite"></p>
+
+  <div class="pin-keypad" role="group" aria-label="PIN keypad">
+    <button class="pin-key" data-key="1" aria-label="1">1</button>
+    <button class="pin-key" data-key="2" aria-label="2">2</button>
+    <button class="pin-key" data-key="3" aria-label="3">3</button>
+    <button class="pin-key" data-key="4" aria-label="4">4</button>
+    <button class="pin-key" data-key="5" aria-label="5">5</button>
+    <button class="pin-key" data-key="6" aria-label="6">6</button>
+    <button class="pin-key" data-key="7" aria-label="7">7</button>
+    <button class="pin-key" data-key="8" aria-label="8">8</button>
+    <button class="pin-key" data-key="9" aria-label="9">9</button>
+    <button class="pin-key pin-key--empty" aria-hidden="true"></button>
+    <button class="pin-key" data-key="0" aria-label="0">0</button>
+    <button class="pin-key pin-key--delete" data-key="del" aria-label="Delete">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     APP SHELL
+══════════════════════════════════════════ -->
+<div id="app-shell">
+
+  <!-- Top header -->
+  <header class="app-header" role="banner">
+    <div class="app-header__logo">
+      <div class="app-header__logo-mark">HMS</div>
+      <span class="app-header__title">Tracker</span>
+    </div>
+    <div class="app-header__actions">
+      <span id="save-status" role="status" aria-live="polite"></span>
+      <button class="app-header__btn" id="settings-btn" aria-label="Settings">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.07 4.93A10 10 0 0 0 4.93 19.07M4.93 4.93a10 10 0 0 0 14.14 14.14M12 2v2M12 20v2M2 12h2M20 12h2"></path></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Toast container -->
+  <div id="toast-container" role="region" aria-label="Notifications" aria-live="polite"></div>
+
+  <!-- ── PAGES ── -->
+
+  <!-- Dashboard -->
+  <main id="page-dashboard" class="page" role="main">
+    <div class="capital-hero">
+      <div class="capital-hero__label">Your Capital Today</div>
+      <div class="capital-hero__amount" id="net-worth-value" aria-live="polite" aria-label="Net worth">Rs 0</div>
+      <div class="capital-hero__velocity">
+        <span id="velocity-badge" class="capital-hero__velocity-badge velocity-up">▲ Rs 0/day</span>
+      </div>
+      <div class="capital-hero__sparkline" id="sparkline"></div>
+    </div>
+
+    <div class="month-stats">
+      <div class="stat-card">
+        <div class="stat-card__value text-success" id="month-income">Rs 0</div>
+        <div class="stat-card__label">Received</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__value text-danger" id="month-expenses">Rs 0</div>
+        <div class="stat-card__label">Deployed</div>
+      </div>
+    </div>
+
+    <div class="zakat-nudge" id="zakat-nudge" style="display:none" role="alert">
+      <span class="zakat-nudge__icon">☽</span>
+      <span class="zakat-nudge__text">Zakat due — time to purify your wealth.</span>
+      <button class="btn btn--sm btn--ghost" onclick="location.hash='zakat'">View</button>
+    </div>
+
+    <div class="goals-ring-section card">
+      <div class="card__header">
+        <span class="card__title">Goal Progress</span>
+        <button class="btn btn--sm btn--ghost" onclick="location.hash='goals'">All Goals →</button>
+      </div>
+      <div class="card__body">
+        <div class="rings-row" id="goal-rings"></div>
+      </div>
+    </div>
+
+    <div class="reflection-card">
+      <div class="reflection-card__day" id="reflection-day">Daily Reflection</div>
+      <p class="reflection-card__text" id="reflection-text">Loading wisdom…</p>
+    </div>
+  </main>
+
+<!-- Assets -->
+
+  <main id="page-assets" class="page" role="main">
+
+    <h2 class="section-title" style="padding-top:0">Capital Allocation</h2>
+
+    <div class="stat-card" style="margin-bottom:var(--space-md);text-align:center">
+      <div class="stat-card__value" id="assets-net-worth">Rs 0</div>
+      <div class="stat-card__label">Net Worth</div>
+    </div>
+
+    <div class="assets-tabs">
+      <button class="asset-tab-btn active" data-section="cash">Cash</button>
+      <button class="asset-tab-btn" data-section="physical">Physical</button>
+      <button class="asset-tab-btn" data-section="investments">Invest</button>
+      <button class="asset-tab-btn" data-section="liabilities">Liabilities</button>
+    </div>
+
+    <div id="assets-content">
+
+      <div id="assets-section-cash" class="asset-section active card" style="padding:var(--space-md)">
+        <div id="assets-cash-list"></div>
+        <button class="btn btn--ghost btn--full" style="margin-top:var(--space-sm)" data-open-modal="add-asset-modal" data-asset-tab="cash">+ Add Cash Account</button>
+      </div>
+
+      <div id="assets-section-physical" class="asset-section card" style="padding:var(--space-md)">
+        <div id="assets-physical-list"></div>
+        <button class="btn btn--ghost btn--full" style="margin-top:var(--space-sm)" data-open-modal="add-asset-modal" data-asset-tab="physical">+ Add Physical Item</button>
+      </div>
+
+      <div id="assets-section-investments" class="asset-section card" style="padding:var(--space-md)">
+        <div id="assets-investments-list"></div>
+        <button class="btn btn--ghost btn--full" style="margin-top:var(--space-sm)" data-open-modal="add-asset-modal" data-asset-tab="investment">+ Add Investment</button>
+      </div>
+
+      <div id="assets-section-liabilities" class="asset-section card" style="padding:var(--space-md)">
+        <div id="assets-liabilities-list"></div>
+        <button class="btn btn--ghost btn--full" style="margin-top:var(--space-sm)" data-open-modal="add-asset-modal" data-asset-tab="liability">+ Add Liability</button>
+      </div>
+
+    </div>
+
+
+<!-- Rates card -->
+  <div class="section-title">Exchange Rates</div>
+    <div class="rates-card card">
+      <div class="rate-item">
+        <div>
+          <div class="card__title">USD / PKR</div>
+          <div class="caption text-muted">1 US Dollar</div>
+        </div>
+        <div style="text-align:right">
+          <div class="rate-item__value" id="rate-usd">Rs —</div>
+        </div>
+      </div>
+      <div class="rate-item">
+        <div>
+          <div class="card__title">Gold (10g)</div>
+          <div class="caption text-muted">24-karat</div>
+        </div>
+        <div style="text-align:right">
+          <div class="rate-item__value" id="rate-gold">Rs —</div>
+        </div>
+      </div>
+      <div class="rate-item">
+        <div>
+          <div class="card__title">Silver (1g)</div>
+          <div class="caption text-muted">999 pure</div>
+        </div>
+        <div style="text-align:right">
+          <div class="rate-item__value" id="rate-silver">Rs —</div>
+        </div>
+      </div>
+    </div>
+    <div id="rates-stale-warning" class="caption text-warning" style="display:none;margin-bottom:var(--space-sm)">⚠ Rates may be outdated — please update</div>
+    <button class="btn btn--secondary btn--full" data-open-modal="rates-modal">Update Rates</button>
+</main>
+
+
+
+  <!-- Expenses -->
+  <main id="page-expenses" class="page" role="main">
+    <div class="month-nav">
+      <button class="month-nav__btn" id="month-prev" aria-label="Previous month">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="month-nav__month" id="current-month-label">Loading…</span>
+      <button class="month-nav__btn" id="month-next" aria-label="Next month">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    </div>
+
+    <div class="expense-summary">
+      <div class="stat-card">
+        <div class="stat-card__value text-success" id="exp-income">Rs 0</div>
+        <div class="stat-card__label">Income</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__value text-danger" id="exp-expenses">Rs 0</div>
+        <div class="stat-card__label">Expenses</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__value" id="exp-net">Rs 0</div>
+        <div class="stat-card__label">Net</div>
+      </div>
+    </div>
+
+    <div class="chart-wrap">
+      <canvas id="expenses-chart" aria-label="Monthly spending by category" role="img"></canvas>
+    </div>
+
+    <div class="filter-chips" id="expense-filters" role="group" aria-label="Filter transactions">
+      <button class="filter-chip active" data-filter="all">All</button>
+      <button class="filter-chip" data-filter="expense">Expenses</button>
+      <button class="filter-chip" data-filter="income">Income</button>
+      <button class="filter-chip" data-filter="Myself">Myself</button>
+      <button class="filter-chip" data-filter="Food & Chai">Food & Chai</button>
+      <button class="filter-chip" data-filter="Education">Education</button>
+      <button class="filter-chip" data-filter="Unexpected">Unexpected</button>
+    </div>
+
+    <div class="card" style="padding:var(--space-md)">
+      <div id="transactions-list"></div>
+    </div>
+  </main>
+
+
+
+<!-- Goals -->
+<main id="page-goals" class="page" role="main">
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-md)">
+    <h2 style="font-size:1.125rem;font-weight:700">Financial Targets</h2>
+    <button class="btn btn--primary btn--sm" data-open-modal="add-goal-modal">+ New Goal</button>
+  </div>
+
+  <div id="goals-list"></div>
+
+</main>
+
+
+<!-- Zakat -->
+<main id="page-zakat" class="page" role="main">
+
+  <div class="zakat-hero">
+    <div class="zakat-hero__status" id="zakat-status-label">Checking nisab…</div>
+    <div class="zakat-hero__amount" id="zakat-due-amount">Rs 0</div>
+    <div class="zakat-hero__label">Zakat Due</div>
+    <div class="zakat-hero__projection" id="purification-projection"></div>
+  </div>
+
+  <div class="nisab-card">
+
+    <div class="card__title" style="margin-bottom:var(--space-sm)">Nisab Threshold</div>
+
+    <div class="nisab-toggle">
+      <button class="nisab-toggle-btn active" id="nisab-gold-btn">Gold (85g)</button>
+      <button class="nisab-toggle-btn" id="nisab-silver-btn">Silver (595g)</button>
+    </div>
+
+    <div class="nisab-bar-labels">
+      <span class="caption text-muted">Eligible Assets: <strong id="eligible-assets">Rs 0</strong></span>
+      <span class="caption text-muted">Nisab: <strong id="nisab-value">Rs 0</strong></span>
+    </div>
+
+    <div class="progress-bar-wrap nisab-bar-wrap">
+      <div class="progress-bar" id="nisab-progress" style="width:0%"></div>
+    </div>
+  </div>
+
+<!-- Hawl countdown -->
+
+<div class="card" style="margin-bottom:var(--space-md)">
+
+  <div class="card__header">
+    <span class="card__title">Hawl (Lunar Year)</span>
+    <span class="caption text-muted">354 days</span>
+  </div>
+
+  <div class="card__body">
+    <div class="hawl-countdown" aria-label="Hawl countdown">
+
+      <div class="hawl-unit">
+        <div class="hawl-unit__value" id="hawl-months">00</div>
+        <div class="hawl-unit__label">Months</div>
+      </div>
+
+      <div class="hawl-divider">:</div>
+      <div class="hawl-unit">
+        <div class="hawl-unit__value" id="hawl-days">00</div>
+        <div class="hawl-unit__label">Days</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+    <!-- Zakat actions -->
+    <div class="btn-group" style="margin-bottom:var(--space-md)">
+      <button class="btn btn--primary" data-open-modal="log-payment-modal">Log Payment</button>
+      <button class="btn btn--secondary" data-open-modal="log-sadaqah-modal">Sadaqah</button>
+    </div>
+
+    <!-- Payment log -->
+    <div class="card" style="margin-bottom:var(--space-md)">
+      <div class="card__header">
+        <span class="card__title">Zakat Payments</span>
+        <button class="btn btn--ghost btn--sm" id="zakat-csv-btn">Export CSV</button>
+      </div>
+      <div class="card__body" style="padding:0 var(--space-lg)">
+        <div id="zakat-payments-list"></div>
+      </div>
+    </div>
+
+    <!-- Sadaqah total -->
+    <div class="card" style="margin-bottom:var(--space-md)">
+      <div class="card__header"><span class="card__title">Sadaqah This Year</span></div>
+      <div class="card__body" style="text-align:center">
+        <div class="sadaqah-total" id="sadaqah-total">Rs 0</div>
+        <div class="caption text-muted">Voluntary giving — may Allah accept it</div>
+      </div>
+    </div>
+
+    <button class="btn btn--danger btn--full" id="zakat-reset-btn">Zakat Year Reset</button>
+  </main>
+
+  <!-- FAB -->
+  <button class="fab" id="fab" aria-label="Quick log — expense, income, or adjustment">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+  </button>
+
+  <!-- Bottom nav -->
+  <nav class="bottom-nav" role="navigation" aria-label="Main navigation">
+    <button class="nav-item active" data-route="dashboard" aria-label="Dashboard">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect></svg>
+      <span class="nav-item__label">Home</span>
+    </button>
+    <button class="nav-item" data-route="assets" aria-label="Assets">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+      <span class="nav-item__label">Assets</span>
+    </button>
+    <button class="nav-item" data-route="expenses" aria-label="Transactions">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+      <span class="nav-item__label">Log</span>
+    </button>
+    <button class="nav-item" data-route="goals" aria-label="Goals">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+      <span class="nav-item__label">Goals</span>
+    </button>
+    <button class="nav-item" data-route="zakat" aria-label="Zakat">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8.5C21 13.1 16.9 17 12 17C7.1 17 3 13.1 3 8.5C3 3.9 7.1 0 12 0C16.9 0 21 3.9 21 8.5Z" transform="translate(0,3)"></path><line x1="12" y1="17" x2="12" y2="21"></line><line x1="8" y1="21" x2="16" y2="21"></line></svg>
+      <span class="nav-item__label">Zakat</span>
+    </button>
+  </nav>
+
+</div><!-- end app-shell -->
+
+
+<!-- ══════════════════════════════════════════
+    MODALS
+══════════════════════════════════════════ -->
+
+<!-- Quick Log Modal (FAB) -->
+<div class="modal-backdrop" id="quick-log-modal" role="dialog" aria-modal="true" aria-labelledby="quick-log-title">
+  <div class="modal">
+    <div class="modal__header">
+      <h2 class="modal__title" id="quick-log-title">Quick Log</h2>
+      <button class="modal__close" data-close-modal="quick-log-modal" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="modal-tabs">
+      <button class="modal-tab active" data-panel="tab-expense">Deploy Capital</button>
+      <button class="modal-tab" data-panel="tab-income">Receive Capital</button>
+      <button class="modal-tab" data-panel="tab-adjust">Adjust</button>
+    </div>
+
+    <!-- Expense tab -->
+    <div class="modal-tab-panel active" id="tab-expense">
+      <form id="expense-form">
+        <div class="form-group">
+          <label class="form-label">Amount (Rs)</label>
+          <div class="input-with-prefix">
+            <span class="input-prefix">Rs</span>
+            <input class="form-input" type="number" name="amount" placeholder="0" min="1" step="1" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <div class="radio-pills">
+            <input class="radio-pill" type="radio" name="category" id="cat-myself" value="Myself">
+            <label for="cat-myself">Myself</label>
+            <input class="radio-pill" type="radio" name="category" id="cat-food" value="Food & Chai">
+            <label for="cat-food">Food & Chai</label>
+            <input class="radio-pill" type="radio" name="category" id="cat-edu" value="Education">
+            <label for="cat-edu">Education</label>
+            <input class="radio-pill" type="radio" name="category" id="cat-unexp" value="Unexpected">
+            <label for="cat-unexp">Unexpected</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="expense-note">Note (optional)</label>
+          <input class="form-input" type="text" id="expense-note" name="note" placeholder="What was this for?">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="expense-date">Date</label>
+          <input class="form-input" type="date" id="expense-date" name="date">
+        </div>
+        <button class="btn btn--primary btn--full" type="submit">Log Expense</button>
+      </form>
+    </div>
+
+    <!-- Income tab -->
+    <div class="modal-tab-panel" id="tab-income">
+      <form id="income-form">
+        <div class="form-group">
+          <label class="form-label">Amount (Rs)</label>
+          <div class="input-with-prefix">
+            <span class="input-prefix">Rs</span>
+            <input class="form-input" type="number" name="amount" placeholder="0" min="1" step="1" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Source</label>
+          <div class="radio-pills">
+            <input class="radio-pill" type="radio" name="source" id="src-pocket" value="Pocket money">
+            <label for="src-pocket">Pocket money</label>
+            <input class="radio-pill" type="radio" name="source" id="src-freelance" value="Freelance">
+            <label for="src-freelance">Freelance</label>
+            <input class="radio-pill" type="radio" name="source" id="src-gift" value="Gift">
+            <label for="src-gift">Gift</label>
+            <input class="radio-pill" type="radio" name="source" id="src-other" value="Other">
+            <label for="src-other">Other</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="income-note">Note (optional)</label>
+          <input class="form-input" type="text" id="income-note" name="note" placeholder="Details…">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="income-date">Date</label>
+          <input class="form-input" type="date" id="income-date" name="date">
+        </div>
+        <button class="btn btn--primary btn--full" type="submit">Log Income</button>
+      </form>
+    </div>
+
+    <!-- Adjust tab -->
+    <div class="modal-tab-panel" id="tab-adjust">
+      <form id="adjust-form">
+        <div class="form-group">
+          <label class="form-label">Amount (Rs) — use negative to reduce</label>
+          <div class="input-with-prefix">
+            <span class="input-prefix">Rs</span>
+            <input class="form-input" type="number" name="amount" placeholder="0" step="1" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="adjust-note">Reason</label>
+          <input class="form-input" type="text" id="adjust-note" name="note" placeholder="Why are you adjusting?">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="adjust-date">Date</label>
+          <input class="form-input" type="date" id="adjust-date" name="date">
+        </div>
+        <button class="btn btn--primary btn--full" type="submit">Log Adjustment</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Add Asset Modal -->
+<div class="modal-backdrop" id="add-asset-modal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal__header">
+      <h2 class="modal__title">Add Asset</h2>
+      <button class="modal__close" data-close-modal="add-asset-modal" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="modal-tabs">
+      <button class="modal-tab active" data-panel="add-cash-panel">Cash</button>
+      <button class="modal-tab" data-panel="add-physical-panel">Physical</button>
+      <button class="modal-tab" data-panel="add-investment-panel">Invest</button>
+      <button class="modal-tab" data-panel="add-liability-panel">Liability</button>
+    </div>
+
+    <div class="modal-tab-panel active" id="add-cash-panel">
+      <form id="add-cash-form">
+        <div class="form-group">
+          <label class="form-label" for="cash-label">Account Label</label>
+          <input class="form-input" id="cash-label" name="label" type="text" placeholder="e.g. HBL Savings" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Balance (Rs)</label>
+          <div class="input-with-prefix"><span class="input-prefix">Rs</span>
+            <input class="form-input" name="amount" type="number" placeholder="0" min="0" step="1" required>
+          </div>
+        </div>
+        <button class="btn btn--primary btn--full" type="submit">Add Cash Account</button>
+      </form>
+    </div>
+
+    <div class="modal-tab-panel" id="add-physical-panel">
+      <form id="add-physical-form">
+        <div class="form-group">
+          <label class="form-label" for="phys-name">Item Name</label>
+          <input class="form-input" id="phys-name" name="name" type="text" placeholder="e.g. Laptop, Motorcycle" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Purchase Price (Rs)</label>
+          <div class="input-with-prefix"><span class="input-prefix">Rs</span>
+            <input class="form-input" name="purchasePrice" type="number" placeholder="0" min="0" step="1">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Current Value (Rs)</label>
+          <div class="input-with-prefix"><span class="input-prefix">Rs</span>
+            <input class="form-input" name="currentValue" type="number" placeholder="0" min="0" step="1">
+          </div>
+        </div>
+        <button class="btn btn--primary btn--full" type="submit">Add Item</button>
+      </form>
+    </div>
+
+    <div class="modal-tab-panel" id="add-investment-panel">
+      <form id="add-investment-form">
+        <div class="form-group">
+          <label class="form-label" for="inv-name">Investment Name</label>
+          <input class="form-input" id="inv-name" name="name" type="text" placeholder="e.g. BTC, Meezan Bank Shares" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="inv-type">Type</label>
+          <select class="form-select" id="inv-type" name="investType">
+            <option value="stock">Stock</option>
+            <option value="crypto">Crypto</option>
+            <option value="fund">Mutual Fund</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Value in PKR</label>
+          <div class="input-with-prefix"><span class="input-prefix">Rs</span>
+            <input class="form-input" name="amountPKR" type="number" placeholder="0" min="0" step="1" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Value in USD (optional)</label>
+          <input class="form-input" name="amountUSD" type="number" placeholder="0" min="0" step="0.01">
+        </div>
+        <button class="btn btn--primary btn--full" type="submit">Add Investment</button>
+      </form>
+    </div>
+
+    <div class="modal-tab-panel" id="add-liability-panel">
+      <form id="add-liability-form">
+        <div class="form-group">
+          <label class="form-label" for="liab-label">Description</label>
+          <input class="form-input" id="liab-label" name="label" type="text" placeholder="e.g. Loan from Uncle" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Amount Owed (Rs)</label>
+          <div class="input-with-prefix"><span class="input-prefix">Rs</span>
+            <input class="form-input" name="amount" type="number" placeholder="0" min="0" step="1" required>
+          </div>
+        </div>
+        <button class="btn btn--primary btn--full" type="submit">Add Liability</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Add Goal Modal -->
+<div class="modal-backdrop" id="add-goal-modal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal__header">
+      <h2 class="modal__title">New Financial Target</h2>
+      <button class="modal__close" data-close-modal="add-goal-modal" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="modal__body">
+      <form id="add-goal-form">
+        <div class="form-group">
+          <label class="form-label" for="goal-title">Goal Name</label>
+          <input class="form-input" id="goal-title" name="title" type="text" placeholder="e.g. MacBook, Emergency Fund" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Target Amount (Rs)</label>
+          <div class="input-with-prefix"><span class="input-prefix">Rs</span>
+            <input class="form-input" name="targetPKR" type="number" placeholder="0" min="1" step="1" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Already Saved (Rs)</label>
+          <div class="input-with-prefix"><span class="input-prefix">Rs</span>
+            <input class="form-input" name="savedPKR" type="number" placeholder="0" min="0" step="1">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="goal-deadline">Deadline (optional)</label>
+          <input class="form-input" id="goal-deadline" name="deadline" type="date">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="goal-type">Type</label>
+          <select class="form-select" id="goal-type" name="type">
+            <option value="short">Short-term (under 1 year)</option>
+            <option value="long">Long-term (1+ years)</option>
+          </select>
+        </div>
+        <button class="btn btn--primary btn--full" type="submit">Create Goal</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Allocate to Goal Modal -->
+<div class="modal-backdrop" id="allocate-modal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal__header">
+      <h2 class="modal__title">Add to Goal</h2>
+      <button class="modal__close" data-close-modal="allocate-modal" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="modal__body">
+      <p class="caption text-muted" style="margin-bottom:var(--space-md)">Allocating to: <strong id="allocate-goal-title" class="text-accent"></strong></p>
+      <form id="allocate-goal-form">
+        <div class="form-group">
+          <label class="form-label">Amount to Allocate (Rs)</label>
+          <div class="input-with-prefix"><span class="input-prefix">Rs</span>
+            <input class="form-input" id="allocate-amount" name="amount" type="number" placeholder="0" min="1" step="1" required>
+          </div>
+        </div>
+        <button class="btn btn--primary btn--full" type="submit">Allocate Capital</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Goal Modal -->
+<div class="modal-backdrop" id="edit-goal-modal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal__header">
+      <h2 class="modal__title">Edit Goal</h2>
+      <button class="modal__close" data-close-modal="edit-goal-modal" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="modal__body">
+      <form id="edit-goal-form">
+        <div class="form-group">
+          <label class="form-label" for="edit-goal-title">Goal Name</label>
+          <input class="form-input" id="edit-goal-title" name="title" type="text" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Target Amount (Rs)</label>
+          <div class="input-with-prefix"><span class="input-prefix">Rs</span>
+            <input class="form-input" id="edit-goal-target" name="targetPKR" type="number" min="1" step="1" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="edit-goal-deadline">Deadline</label>
+          <input class="form-input" id="edit-goal-deadline" name="deadline" type="date">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="edit-goal-type">Type</label>
+          <select class="form-select" id="edit-goal-type" name="type">
+            <option value="short">Short-term</option>
+            <option value="long">Long-term</option>
+          </select>
+        </div>
+        <button class="btn btn--primary btn--full" type="submit">Save Changes</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Log Zakat Payment Modal -->
+<div class="modal-backdrop" id="log-payment-modal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal__header">
+      <h2 class="modal__title">Log Zakat Payment</h2>
+      <button class="modal__close" data-close-modal="log-payment-modal" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="modal__body">
+      <form id="log-payment-form">
+        <div class="form-group">
+          <label class="form-label">Amount (Rs)</label>
+          <div class="input-with-prefix"><span class="input-prefix">Rs</span>
+            <input class="form-input" id="payment-amount" name="amount" type="number" placeholder="0" min="1" step="1" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="payment-recipient">Recipient / Organisation</label>
+          <input class="form-input" id="payment-recipient" name="recipient" type="text" placeholder="e.g. Local Masjid, Edhi Foundation">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="payment-date">Date</label>
+          <input class="form-input" id="payment-date" name="date" type="date">
+        </div>
+        <button class="btn btn--primary btn--full" type="submit">Record Payment</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Log Sadaqah Modal -->
+<div class="modal-backdrop" id="log-sadaqah-modal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal__header">
+      <h2 class="modal__title">Log Sadaqah</h2>
+      <button class="modal__close" data-close-modal="log-sadaqah-modal" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="modal__body">
+      <form id="log-sadaqah-form">
+        <div class="form-group">
+          <label class="form-label">Amount (Rs)</label>
+          <div class="input-with-prefix"><span class="input-prefix">Rs</span>
+            <input class="form-input" id="sadaqah-amount" name="amount" type="number" placeholder="0" min="1" step="1" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="sadaqah-note">Note (optional)</label>
+          <input class="form-input" id="sadaqah-note" name="note" type="text" placeholder="Whoever you gave to, why…">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="sadaqah-date">Date</label>
+          <input class="form-input" id="sadaqah-date" name="date" type="date">
+        </div>
+        <button class="btn btn--primary btn--full" type="submit">Log Sadaqah</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Rates Modal -->
+<div class="modal-backdrop" id="rates-modal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal__header">
+      <h2 class="modal__title">Update Rates</h2>
+      <button class="modal__close" data-close-modal="rates-modal" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="modal__body">
+      <form id="rates-form">
+        <div class="form-group">
+          <label class="form-label" for="rate-usd-input">USD / PKR Exchange Rate</label>
+          <input class="form-input" id="rate-usd-input" name="usdPKR" type="number" placeholder="278.5" step="0.01" min="1">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="rate-gold-input">Gold Price (10g) in PKR</label>
+          <input class="form-input" id="rate-gold-input" name="gold10gPKR" type="number" placeholder="285000" step="100" min="1">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="rate-silver-input">Silver Price (1g) in PKR</label>
+          <input class="form-input" id="rate-silver-input" name="silver1gPKR" type="number" placeholder="2800" step="10" min="1">
+        </div>
+        <div class="btn-group">
+          <button class="btn btn--primary" type="submit">Save Rates</button>
+          <button class="btn btn--secondary" type="button" id="rates-stamp-btn">Confirm Today's Date</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Settings Modal -->
+<div class="modal-backdrop" id="settings-modal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal__header">
+      <h2 class="modal__title">Settings</h2>
+      <button class="modal__close" data-close-modal="settings-modal" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="modal__body">
+
+      <div class="form-toggle">
+        <div>
+          <div class="form-toggle__label">Light Mode</div>
+          <div class="form-toggle__sub">Switch between dark and light theme</div>
+        </div>
+        <div class="toggle-switch" id="theme-toggle" role="switch" aria-checked="false" tabindex="0"></div>
+      </div>
+      <div class="form-divider"></div>
+
+      <div class="section-title" style="padding-top:0">Data</div>
+      <div class="btn-group" style="margin-bottom:var(--space-md)">
+        <button class="btn btn--secondary" id="export-json-btn">Export Backup</button>
+        <button class="btn btn--secondary" id="import-json-btn">Import Backup</button>
+        <input type="file" id="import-file-input" accept=".json" style="display:none">
+      </div>
+
+      <div class="section-title">Security</div>
+      <form id="change-pin-form">
+        <div class="form-group">
+          <label class="form-label" for="old-pin">Current PIN</label>
+          <input class="form-input" id="old-pin" name="oldPin" type="password" maxlength="4" inputmode="numeric" placeholder="••••">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="new-pin">New PIN</label>
+          <input class="form-input" id="new-pin" name="newPin" type="password" maxlength="4" inputmode="numeric" placeholder="••••">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="confirm-pin">Confirm New PIN</label>
+          <input class="form-input" id="confirm-pin" name="confirmPin" type="password" maxlength="4" inputmode="numeric" placeholder="••••">
+        </div>
+        <button class="btn btn--secondary btn--full" type="submit">Change PIN</button>
+      </form>
+
+      <div class="form-divider"></div>
+      <p class="caption text-muted" style="text-align:center;line-height:1.6">
+        HMS Tracker v1.0.0 · Built by Saeed · UET Taxila · March 2026<br>
+        "Every rupee is capital. Deploy it with intention."
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════════ -->
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
