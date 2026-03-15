@@ -11,18 +11,19 @@ export function init() {
   if (!_initialized) {
     _initialized = true;
 
-    // Section tab switching
-    document.getElementById('assets-content')?.addEventListener('click', e => {
-      const btn = e.target.closest('.asset-tab-btn');
-      if (btn) {
-        _activeSection = btn.dataset.section;
-        document.querySelectorAll('.asset-tab-btn').forEach(b => b.classList.toggle('active', b === btn));
-        document.querySelectorAll('.asset-section').forEach(s =>
-          s.classList.toggle('active', s.id === `assets-section-${_activeSection}`)
-        );
+    document.getElementById('page-assets')?.addEventListener('click', e => {
+      // Tab switching
+      const tab = e.target.closest('.asset-tab-btn');
+      if (tab) {
+        _activeSection = tab.dataset.section;
+        document.querySelectorAll('.asset-tab-btn')
+          .forEach(b => b.classList.toggle('active', b === tab));
+        document.querySelectorAll('.asset-section')
+          .forEach(s => s.classList.toggle('active', s.id === `assets-section-${_activeSection}`));
         refresh();
+        return;
       }
-      // Delete
+      // Delete item button
       const del = e.target.closest('[data-action="delete"]');
       if (del) {
         assetsStore.remove(del.dataset.type, del.dataset.id);
