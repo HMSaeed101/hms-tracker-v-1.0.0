@@ -192,14 +192,6 @@ The app is a practical tool, not a fatwa. For your specific Zakat obligations, c
 
 ---
 
-## About
-
-| | |
-|---|---|
-| Developer | Saeed — born April 2, 2006 in Lahore. Grew up in Taxila. |
-| Education | FSC Pre-Medical → Gap Year → CS, UET Taxila (2025–) |
-| Goal | Entrepreneurship — building real products that solve real problems |
-| Portfolio | HMS Portfolio — hmsportfolio.github.io |
 
 **Version:** 1.0.0 · **Built:** March 2026 · **License:** Private — personal use only
 
