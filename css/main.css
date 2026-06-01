@@ -16,3 +16,52 @@
 @import 'pages/expenses.css';
 @import 'pages/goals.css';
 @import 'pages/zakat.css';
+
+/* ── Global Styles ── */
+body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  position: relative;
+  /* Centering the app for desktop */
+  max-width: var(--breakpoint-md);
+  margin: 0 auto;
+}
+
+/* Atmospheric texture */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url('../assets/icons/icon-512.png'); /* Fallback/Placeholder for texture */
+  background-size: 200px;
+  background-repeat: repeat;
+  opacity: 0.03; /* Very subtle */
+  filter: grayscale(1) invert(1);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Subtle gradient overlay for depth */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at top center, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Larger screens layout adjustments */
+@media (min-width: 768px) {
+  body {
+    max-width: 100%; /* Allow full width but use a container */
+  }
+  
+  #app-shell {
+    max-width: var(--breakpoint-lg);
+    margin: 0 auto;
+    padding: 0 var(--space-xl);
+  }
+}

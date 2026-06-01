@@ -7,10 +7,10 @@
   background: var(--color-overlay);
   z-index: 200;
   display: none;
-  align-items: flex-end;
+  align-items: flex-end; /* Mobile: Bottom sheet */
   justify-content: center;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(8px); /* Increased blur */
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .modal-backdrop.open {
@@ -23,7 +23,7 @@
   to   { opacity: 1; }
 }
 
-/* Bottom sheet */
+/* Modal / Bottom sheet */
 .modal {
   background: var(--color-bg-secondary);
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
@@ -33,7 +33,8 @@
   overflow-y: auto;
   overscroll-behavior: contain;
   padding-bottom: env(safe-area-inset-bottom);
-  animation: sheetIn var(--transition-slow) cubic-bezier(0.34,1.56,0.64,1) both;
+  animation: sheetIn var(--transition-slow) cubic-bezier(0.32, 1, 0.2, 1) both;
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.4);
 }
 
 @keyframes sheetIn {
@@ -41,7 +42,7 @@
   to   { transform: translateY(0); }
 }
 
-/* Drag handle */
+/* Drag handle - Mobile only */
 .modal::before {
   content: '';
   display: block;
@@ -50,6 +51,28 @@
   background: var(--color-bg-tertiary);
   border-radius: var(--radius-full);
   margin: var(--space-md) auto var(--space-sm);
+}
+
+@media (min-width: 768px) {
+  .modal-backdrop {
+    align-items: center; /* Desktop: Centered modal */
+  }
+
+  .modal {
+    border-radius: var(--radius-lg);
+    animation: modalIn var(--transition-mid) cubic-bezier(0.16, 1, 0.3, 1) both;
+    padding-bottom: 0;
+    max-height: 80dvh;
+  }
+
+  .modal::before {
+    display: none; /* Hide drag handle on desktop */
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.95) translateY(10px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
 }
 
 /* Modal header */
@@ -63,13 +86,13 @@
 
 .modal__title {
   font-size: 1.125rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--color-text-primary);
 }
 
 .modal__close {
-  width: 32px;
-  height: 32px;
+  width: 40px; /* Larger for mobile */
+  height: 40px;
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
@@ -78,7 +101,9 @@
   transition: background var(--transition-fast);
 }
 
-.modal__close:hover { background: var(--color-bg-tertiary); }
+@media (hover: hover) {
+  .modal__close:hover { background: var(--color-bg-tertiary); color: var(--color-accent); }
+}
 
 /* Modal body */
 .modal__body {
@@ -91,15 +116,19 @@
   border-bottom: 1px solid var(--color-border);
   padding: 0 var(--space-lg);
   gap: var(--space-sm);
+  overflow-x: auto; /* Allow scroll if many tabs */
+  scrollbar-width: none;
 }
 
+.modal-tabs::-webkit-scrollbar { display: none; }
+
 .modal-tab {
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--space-md) var(--space-md);
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--color-text-secondary);
-  border-bottom: 2px solid transparent;
-  transition: color var(--transition-fast), border-color var(--transition-fast);
+  border-bottom: 3px solid transparent;
+  transition: all var(--transition-fast);
   white-space: nowrap;
 }
 

@@ -10,9 +10,8 @@ import { settingsStore }     from './stores/settingsStore.js';
 import render                from './render.js';
 import * as router           from './router.js';
 import * as dashPage         from './pages/dashboard.js';
-import * as assetsPage       from './pages/assets.js';
+import * as portfolioPage    from './pages/portfolio.js';
 import * as expensesPage     from './pages/expenses.js';
-import * as goalsPage        from './pages/goals.js';
 import * as zakatPage        from './pages/zakat.js';
 import { isIOS, today, genId, debounce } from './utils.js';
 

@@ -21,10 +21,13 @@
 /* Primary */
 .btn--primary {
   background: var(--color-accent);
-  color: var(--color-bg-primary);
-  box-shadow: 0 4px 16px rgba(201,168,76,0.3);
+  color: #121212; /* Match primary bg */
+  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.2);
 }
-.btn--primary:hover { box-shadow: 0 6px 24px rgba(201,168,76,0.45); }
+
+@media (hover: hover) {
+  .btn--primary:hover { box-shadow: 0 6px 24px rgba(212, 175, 55, 0.4); }
+}
 
 /* Secondary */
 .btn--secondary {
@@ -32,29 +35,38 @@
   color: var(--color-text-primary);
   border: 1px solid var(--color-border);
 }
-.btn--secondary:hover { background: var(--color-bg-tertiary); border-color: var(--color-accent); }
+
+@media (hover: hover) {
+  .btn--secondary:hover { background: var(--color-bg-tertiary); border-color: var(--color-accent); }
+}
 
 /* Danger */
 .btn--danger {
-  background: rgba(239,68,68,0.12);
+  background: rgba(205, 92, 92, 0.1);
   color: var(--color-danger);
-  border: 1px solid rgba(239,68,68,0.3);
+  border: 1px solid rgba(205, 92, 92, 0.2);
 }
-.btn--danger:hover { background: rgba(239,68,68,0.2); }
+
+@media (hover: hover) {
+  .btn--danger:hover { background: rgba(205, 92, 92, 0.2); }
+}
 
 /* Ghost */
 .btn--ghost {
   background: transparent;
   color: var(--color-accent);
 }
-.btn--ghost:hover { background: rgba(201,168,76,0.08); }
+
+@media (hover: hover) {
+  .btn--ghost:hover { background: rgba(212, 175, 55, 0.08); }
+}
 
 /* Full width */
 .btn--full { width: 100%; }
 
-/* Small */
+/* Small - Increased for mobile touch */
 .btn--sm {
-  height: 36px;
+  height: 40px; /* Increased from 36px */
   padding: 0 var(--space-md);
   font-size: 0.8125rem;
   border-radius: var(--radius-sm);

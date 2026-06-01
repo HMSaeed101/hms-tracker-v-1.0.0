@@ -202,6 +202,30 @@
 					</div>
 				</div>
 
+				<!-- Rates Card (Moved to Dashboard) -->
+				<div class="rates-row">
+					<div class="rates-card card">
+						<div class="rate-item">
+							<div>
+								<div class="card__title">USD / PKR</div>
+							</div>
+							<div class="rate-item__value" id="rate-usd">Rs —</div>
+						</div>
+						<div class="rate-item">
+							<div>
+								<div class="card__title">Gold (10g)</div>
+							</div>
+							<div class="rate-item__value" id="rate-gold">Rs —</div>
+						</div>
+						<div class="rate-item">
+							<div>
+								<div class="card__title">Silver (1g)</div>
+							</div>
+							<div class="rate-item__value" id="rate-silver">Rs —</div>
+						</div>
+					</div>
+				</div>
+
 				<div
 					class="zakat-nudge"
 					id="zakat-nudge"
@@ -225,7 +249,7 @@
 						<span class="card__title">Goal Progress</span>
 						<button
 							class="btn btn--sm btn--ghost"
-							onclick="location.hash = 'goals'"
+							onclick="location.hash = 'portfolio?tab=goals'"
 						>
 							All Goals →
 						</button>
@@ -245,285 +269,145 @@
 				</div>
 			</main>
 
-			<!-- Assets -->
-
-			<main id="page-assets" class="page" role="main">
-				<h2 class="section-title" style="padding-top: 0">
-					Capital Allocation
-				</h2>
-
-				<div
-					class="stat-card"
-					style="margin-bottom: var(--space-md); text-align: center"
-				>
-					<div class="stat-card__value" id="assets-net-worth">
-						Rs 0
-					</div>
-					<div class="stat-card__label">Net Worth</div>
-				</div>
-
-				<div class="assets-tabs">
-					<button class="asset-tab-btn active" data-section="cash">
-						Cash
-					</button>
-					<button class="asset-tab-btn" data-section="physical">
-						Physical
-					</button>
-					<button class="asset-tab-btn" data-section="investments">
-						Invest
-					</button>
-					<button class="asset-tab-btn" data-section="liabilities">
-						Liabilities
-					</button>
-				</div>
-
-				<div id="assets-content">
-					<div
-						id="assets-section-cash"
-						class="asset-section active card"
-						style="padding: var(--space-md)"
-					>
-						<div id="assets-cash-list"></div>
-						<button
-							class="btn btn--ghost btn--full"
-							style="margin-top: var(--space-sm)"
-							data-open-modal="add-asset-modal"
-							data-asset-tab="cash"
-						>
-							+ Add Cash Account
+			<!-- Portfolio (Merged Assets & Goals) -->
+			<main id="page-portfolio" class="page" role="main">
+				<div class="portfolio-header">
+					<h2 class="section-title">Portfolio</h2>
+					<div class="portfolio-tabs">
+						<button class="portfolio-tab-btn active" data-portfolio-tab="assets">
+							Current Assets
 						</button>
-					</div>
-
-					<div
-						id="assets-section-physical"
-						class="asset-section card"
-						style="padding: var(--space-md)"
-					>
-						<div id="assets-physical-list"></div>
-						<button
-							class="btn btn--ghost btn--full"
-							style="margin-top: var(--space-sm)"
-							data-open-modal="add-asset-modal"
-							data-asset-tab="physical"
-						>
-							+ Add Physical Item
-						</button>
-					</div>
-
-					<div
-						id="assets-section-investments"
-						class="asset-section card"
-						style="padding: var(--space-md)"
-					>
-						<div id="assets-investments-list"></div>
-						<button
-							class="btn btn--ghost btn--full"
-							style="margin-top: var(--space-sm)"
-							data-open-modal="add-asset-modal"
-							data-asset-tab="investment"
-						>
-							+ Add Investment
-						</button>
-					</div>
-
-					<div
-						id="assets-section-liabilities"
-						class="asset-section card"
-						style="padding: var(--space-md)"
-					>
-						<div id="assets-liabilities-list"></div>
-						<button
-							class="btn btn--ghost btn--full"
-							style="margin-top: var(--space-sm)"
-							data-open-modal="add-asset-modal"
-							data-asset-tab="liability"
-						>
-							+ Add Liability
+						<button class="portfolio-tab-btn" data-portfolio-tab="goals">
+							Financial Targets
 						</button>
 					</div>
 				</div>
 
-				<!-- Rates card -->
-				<div class="section-title">Exchange Rates</div>
-				<div class="rates-card card">
-					<div class="rate-item">
-						<div>
-							<div class="card__title">USD / PKR</div>
-							<div class="caption text-muted">1 US Dollar</div>
-						</div>
-						<div style="text-align: right">
-							<div class="rate-item__value" id="rate-usd">
-								Rs —
-							</div>
-						</div>
-					</div>
-					<div class="rate-item">
-						<div>
-							<div class="card__title">Gold (10g)</div>
-							<div class="caption text-muted">24-karat</div>
-						</div>
-						<div style="text-align: right">
-							<div class="rate-item__value" id="rate-gold">
-								Rs —
-							</div>
-						</div>
-					</div>
-					<div class="rate-item">
-						<div>
-							<div class="card__title">Silver (1g)</div>
-							<div class="caption text-muted">999 pure</div>
-						</div>
-						<div style="text-align: right">
-							<div class="rate-item__value" id="rate-silver">
-								Rs —
-							</div>
-						</div>
-					</div>
-				</div>
-				<div
-					id="rates-stale-warning"
-					class="caption text-warning"
-					style="display: none; margin-bottom: var(--space-sm)"
-				>
-					⚠ Rates may be outdated — please update
-				</div>
-				<button
-					class="btn btn--secondary btn--full"
-					data-open-modal="rates-modal"
-				>
-					Update Rates
-				</button>
-			</main>
-
-			<!-- Expenses -->
-			<main id="page-expenses" class="page" role="main">
-				<div class="month-nav">
-					<button
-						class="month-nav__btn"
-						id="month-prev"
-						aria-label="Previous month"
+				<!-- Assets View -->
+				<div id="portfolio-view-assets" class="portfolio-view active">
+					<div
+						class="stat-card"
+						style="margin-bottom: var(--space-md); text-align: center"
 					>
-						<svg
-							width="16"
-							height="16"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2.5"
-						>
-							<polyline points="15 18 9 12 15 6"></polyline>
-						</svg>
-					</button>
-					<span class="month-nav__month" id="current-month-label"
-						>Loading…</span
-					>
-					<button
-						class="month-nav__btn"
-						id="month-next"
-						aria-label="Next month"
-					>
-						<svg
-							width="16"
-							height="16"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2.5"
-						>
-							<polyline points="9 18 15 12 9 6"></polyline>
-						</svg>
-					</button>
-				</div>
-
-				<div class="expense-summary">
-					<div class="stat-card">
-						<div
-							class="stat-card__value text-success"
-							id="exp-income"
-						>
+						<div class="stat-card__value" id="assets-net-worth">
 							Rs 0
 						</div>
-						<div class="stat-card__label">Income</div>
+						<div class="stat-card__label">Net Worth</div>
 					</div>
-					<div class="stat-card">
+
+					<div class="assets-tabs">
+						<button class="asset-tab-btn active" data-section="cash">
+							Cash
+						</button>
+						<button class="asset-tab-btn" data-section="physical">
+							Physical
+						</button>
+						<button class="asset-tab-btn" data-section="investments">
+							Invest
+						</button>
+						<button class="asset-tab-btn" data-section="liabilities">
+							Debt
+						</button>
+					</div>
+
+					<div id="assets-content">
 						<div
-							class="stat-card__value text-danger"
-							id="exp-expenses"
+							id="assets-section-cash"
+							class="asset-section active card"
+							style="padding: var(--space-md)"
 						>
-							Rs 0
+							<div id="assets-cash-list"></div>
+							<button
+								class="btn btn--ghost btn--full"
+								style="margin-top: var(--space-sm)"
+								data-open-modal="add-asset-modal"
+								data-asset-tab="cash"
+							>
+								+ Add Cash Account
+							</button>
 						</div>
-						<div class="stat-card__label">Expenses</div>
+
+						<div
+							id="assets-section-physical"
+							class="asset-section card"
+							style="padding: var(--space-md)"
+						>
+							<div id="assets-physical-list"></div>
+							<button
+								class="btn btn--ghost btn--full"
+								style="margin-top: var(--space-sm)"
+								data-open-modal="add-asset-modal"
+								data-asset-tab="physical"
+							>
+								+ Add Physical Item
+							</button>
+						</div>
+
+						<div
+							id="assets-section-investments"
+							class="asset-section card"
+							style="padding: var(--space-md)"
+						>
+							<div id="assets-investments-list"></div>
+							<button
+								class="btn btn--ghost btn--full"
+								style="margin-top: var(--space-sm)"
+								data-open-modal="add-asset-modal"
+								data-asset-tab="investment"
+							>
+								+ Add Investment
+							</button>
+						</div>
+
+						<div
+							id="assets-section-liabilities"
+							class="asset-section card"
+							style="padding: var(--space-md)"
+						>
+							<div id="assets-liabilities-list"></div>
+							<button
+								class="btn btn--ghost btn--full"
+								style="margin-top: var(--space-sm)"
+								data-open-modal="add-asset-modal"
+								data-asset-tab="liability"
+							>
+								+ Add Liability
+							</button>
+						</div>
 					</div>
-					<div class="stat-card">
-						<div class="stat-card__value" id="exp-net">Rs 0</div>
-						<div class="stat-card__label">Net</div>
-					</div>
-				</div>
-
-				<div class="chart-wrap">
-					<canvas
-						id="expenses-chart"
-						aria-label="Monthly spending by category"
-						role="img"
-					></canvas>
-				</div>
-
-				<div
-					class="filter-chips"
-					id="expense-filters"
-					role="group"
-					aria-label="Filter transactions"
-				>
-					<button class="filter-chip active" data-filter="all">
-						All
-					</button>
-					<button class="filter-chip" data-filter="expense">
-						Expenses
-					</button>
-					<button class="filter-chip" data-filter="income">
-						Income
-					</button>
-					<button class="filter-chip" data-filter="Myself">
-						Myself
-					</button>
-					<button class="filter-chip" data-filter="Food & Chai">
-						Food & Chai
-					</button>
-					<button class="filter-chip" data-filter="Education">
-						Education
-					</button>
-					<button class="filter-chip" data-filter="Unexpected">
-						Unexpected
-					</button>
-				</div>
-
-				<div class="card" style="padding: var(--space-md)">
-					<div id="transactions-list"></div>
-				</div>
-			</main>
-
-			<!-- Goals -->
-			<main id="page-goals" class="page" role="main">
-				<div
-					style="
-						display: flex;
-						justify-content: space-between;
-						align-items: center;
-						margin-bottom: var(--space-md);
-					"
-				>
-					<h2 style="font-size: 1.125rem; font-weight: 700">
-						Financial Targets
-					</h2>
+					
 					<button
-						class="btn btn--primary btn--sm"
-						data-open-modal="add-goal-modal"
+						class="btn btn--secondary btn--full"
+						data-open-modal="rates-modal"
+						style="margin-top: var(--space-md)"
 					>
-						+ New Goal
+						Update Rates
 					</button>
 				</div>
 
-				<div id="goals-list"></div>
+				<!-- Goals View -->
+				<div id="portfolio-view-goals" class="portfolio-view">
+					<div
+						style="
+							display: flex;
+							justify-content: space-between;
+							align-items: center;
+							margin-bottom: var(--space-md);
+						"
+					>
+						<h3 style="font-size: 1rem; font-weight: 700; color: var(--color-text-secondary)">
+							Active Targets
+						</h3>
+						<button
+							class="btn btn--primary btn--sm"
+							data-open-modal="add-goal-modal"
+						>
+							+ New Goal
+						</button>
+					</div>
+
+					<div id="goals-list"></div>
+				</div>
 			</main>
 
 			<!-- Zakat -->

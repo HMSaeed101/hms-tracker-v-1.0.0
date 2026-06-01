@@ -3,28 +3,24 @@
 /* Hero capital card */
 .capital-hero {
   background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border);
+  border: none;
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
   margin-bottom: var(--space-md);
   box-shadow: var(--shadow-card);
   position: relative;
   overflow: hidden;
+  border-left: 4px solid var(--color-accent);
 }
 
-/* Gold accent line on top */
 .capital-hero::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-soft), transparent);
+  display: none;
 }
 
 .capital-hero__label {
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-text-secondary);
   margin-bottom: var(--space-sm);
@@ -32,11 +28,11 @@
 
 .capital-hero__amount {
   font-family: var(--font-mono);
-  font-size: clamp(1.875rem, 8vw, 2.75rem);
+  font-size: clamp(2rem, 8vw, 3rem);
   font-weight: 700;
   color: var(--color-accent);
-  letter-spacing: -0.03em;
-  line-height: 1;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
   margin-bottom: var(--space-sm);
 }
 
@@ -53,45 +49,52 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 2px var(--space-sm);
+  padding: 4px var(--space-md);
   border-radius: var(--radius-full);
   font-size: 0.8125rem;
   font-weight: 700;
 }
 
 .velocity-up {
-  background: rgba(16,185,129,0.12);
+  background: rgba(136, 160, 150, 0.15);
   color: var(--color-success);
 }
 
 .velocity-down {
-  background: rgba(239,68,68,0.12);
+  background: rgba(205, 92, 92, 0.15);
   color: var(--color-danger);
 }
 
 .capital-hero__sparkline {
-  margin-top: var(--space-md);
+  margin-top: var(--space-lg);
 }
 
-/* Quick breakdown row */
+/* Quick breakdown row - Mobile First */
 .breakdown-row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-sm);
+  grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+  gap: var(--space-md);
   margin-bottom: var(--space-md);
+}
+
+@media (min-width: 640px) {
+  .breakdown-row {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns on tablet+ */
+  }
 }
 
 .breakdown-chip {
   background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border);
+  border: none;
   border-radius: var(--radius-md);
-  padding: var(--space-sm) var(--space-md);
-  text-align: center;
+  padding: var(--space-md);
+  text-align: left;
+  box-shadow: var(--shadow-card);
 }
 
 .breakdown-chip__value {
   font-family: var(--font-mono);
-  font-size: 0.9375rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--color-text-primary);
   letter-spacing: -0.02em;
@@ -103,15 +106,16 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--color-text-secondary);
-  margin-top: 2px;
+  margin-top: 4px;
 }
 
 /* Goals rings section */
 .goals-ring-section {
   background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border);
+  border: none;
   border-radius: var(--radius-md);
   margin-bottom: var(--space-md);
+  box-shadow: var(--shadow-card);
 }
 
 .goals-ring-section .card__header {
@@ -124,12 +128,13 @@
 
 /* Daily reflection */
 .reflection-card {
-  background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(15,52,96,0.4));
-  border: 1px solid rgba(201,168,76,0.2);
+  background: var(--color-bg-tertiary);
+  border: none;
   border-radius: var(--radius-md);
   padding: var(--space-lg);
   margin-bottom: var(--space-md);
   position: relative;
+  box-shadow: var(--shadow-card);
 }
 
 .reflection-card__day {
@@ -142,16 +147,17 @@
 }
 
 .reflection-card__text {
-  font-size: 0.9375rem;
+  font-size: 1rem;
   line-height: 1.6;
   color: var(--color-text-primary);
   font-style: italic;
+  opacity: 0.9;
 }
 
 /* Zakat nudge banner */
 .zakat-nudge {
-  background: rgba(245,158,11,0.1);
-  border: 1px solid rgba(245,158,11,0.3);
+  background: rgba(204, 153, 102, 0.1);
+  border: 1px solid rgba(204, 153, 102, 0.2);
   border-radius: var(--radius-md);
   padding: var(--space-md) var(--space-lg);
   display: flex;
@@ -169,10 +175,22 @@
   font-weight: 500;
 }
 
-/* Month quick-stats */
+/* Month quick-stats - Mobile First */
 .month-stats {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-sm);
+  grid-template-columns: 1fr; /* 1 column on small phones */
+  gap: var(--space-md);
   margin-bottom: var(--space-md);
+}
+
+@media (min-width: 375px) {
+  .month-stats {
+    grid-template-columns: 1fr 1fr; /* 2 columns on larger phones */
+  }
+}
+
+@media (min-width: 768px) {
+  .month-stats {
+    grid-template-columns: 1fr 1fr 1fr; /* 3 columns on tablet+ */
+  }
 }
