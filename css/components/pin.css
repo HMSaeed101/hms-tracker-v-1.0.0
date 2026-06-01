@@ -15,7 +15,7 @@
   display: flex;
   animation: pageIn var(--transition-mid) ease both;
 }
-
+/* ! Logo SVG instead of Text */
 .pin-screen__logo {
   width: 64px;
   height: 64px;
@@ -30,7 +30,7 @@
   font-weight: 800;
   color: var(--color-bg-primary);
 }
-
+/* ! */
 .pin-screen__title {
   font-size: 1.5rem;
   font-weight: 700;
@@ -108,8 +108,11 @@
 }
 
 .pin-key--delete {
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: var(--color-text-secondary);
+  display : flex;
+  align-items : center;
+  justify-content : center;
 }
 
 .pin-key--empty {

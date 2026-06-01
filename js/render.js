@@ -1,7 +1,7 @@
 // js/render.js — all DOM updates. No business logic, no store calls.
 import { formatPKR, formatPKRFull, formatDate, formatDateShort,
-         historyToPoints, progressColor, ringOffset, ringCircumference,
-         daysUntil } from './utils.js';
+        historyToPoints, progressColor, ringOffset, ringCircumference,
+        daysUntil } from './utils.js';
 
 // ─────────────────────────────────────────
 // Category colors — read from CSS variables (single source of truth)
