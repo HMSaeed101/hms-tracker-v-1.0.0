@@ -32,8 +32,8 @@ Why these choices were made is documented in the **[Architecture Decisions](../.
 ## Quick start
 
 ```bash
-git clone https://github.com/hmsaeed-dev/hms-tracker.git
-cd hms-tracker
+git clone https://github.com/hmsaeed-dev/Finance-Tracker.git
+cd Finance-Tracker
 
 # Service workers require HTTP, not file://
 npx serve .
