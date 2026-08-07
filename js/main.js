@@ -627,20 +627,24 @@ function on(id, event, handler) {
   document.getElementById(id)?.addEventListener(event, handler);
 }
 
-function openModal(id)  { document.getElementById(id)?.classList.add('open'); }
+function openModal(id)  {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.add('open');
+  setTodayOnDates(el);
+}
 function closeModal(id) { document.getElementById(id)?.classList.remove('open'); }
 
 function setTodayOnDates(form) {
   const t = today();
-  form.querySelectorAll('input[type="date"]').forEach(el => { el.value = t; });
+  form.querySelectorAll('input[type="date"]').forEach(el => { if (!el.value) el.value = t; });
 }
 
 function refreshCurrentPage() {
   const cur = router.current();
   if (cur === 'dashboard') dashPage.refresh();
   else if (cur === 'expenses') expensesPage.refresh();
-  else if (cur === 'assets')   assetsPage.refresh();
-  else if (cur === 'goals')    goalsPage.refresh();
+  else if (cur === 'assets' || cur === 'goals' || cur === 'portfolio') portfolioPage.refresh();
   else if (cur === 'zakat')    zakatPage.refresh();
 }
 

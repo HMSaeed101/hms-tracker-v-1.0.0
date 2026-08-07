@@ -15,6 +15,11 @@ export const zakatStore = {
     const eligible     = calcZakatEligible(assets);
     const nisab        = calcNisab(rates, z().nisabStandard);
     const nisabReached = eligible >= nisab;
+    if (!nisabReached && z().hawlStartDate) {
+      z().hawlStartDate = null;
+      z().nisabReached  = false;
+      save();
+    }
     const daysSince    = z().hawlStartDate
       ? Math.floor((Date.now() - new Date(z().hawlStartDate)) / 86400000) : 0;
     const hawlComplete = daysSince >= 354;

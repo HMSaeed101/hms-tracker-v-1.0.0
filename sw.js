@@ -37,10 +37,8 @@ const ASSETS = [
   'js/stores/zakatStore.js',
   'js/stores/settingsStore.js',
   'js/pages/dashboard.js',
-  'js/pages/assets.js',
   'js/pages/portfolio.js',
   'js/pages/expenses.js',
-  'js/pages/goals.js',
   'js/pages/zakat.js',
 ];
 
