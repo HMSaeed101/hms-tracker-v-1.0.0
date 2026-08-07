@@ -2,58 +2,62 @@
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
-  margin-bottom: var(--space-md);
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
 }
 
 .form-label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--color-text-secondary);
+  opacity: 0.8;
 }
 
 .form-input,
 .form-select,
 .form-textarea {
   width: 100%;
-  padding: 0 var(--space-md);
-  height: 48px;
-  background: var(--color-bg-primary);
-  border: 1.5px solid var(--color-border);
+  padding: 0 var(--space-lg);
+  height: 52px;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   color: var(--color-text-primary);
-  font-size: 0.9375rem;
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all var(--transition-fast);
 }
 
 .form-textarea {
   height: auto;
-  padding: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
   resize: vertical;
-  min-height: 80px;
+  min-height: 100px;
 }
 
 .form-input:focus,
 .form-select:focus,
 .form-textarea:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.08);
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
 }
 
 .form-input::placeholder,
 .form-textarea::placeholder {
   color: var(--color-text-secondary);
-  opacity: 0.6;
+  opacity: 0.4;
 }
 
 .form-select {
   appearance: none;
   -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23A8A8B3' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239ca3af' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right var(--space-md) center;
+  background-position: right var(--space-lg) center;
   padding-right: var(--space-2xl);
 }
 
@@ -64,25 +68,57 @@
 
 .input-prefix {
   position: absolute;
-  left: var(--space-md);
+  left: var(--space-lg);
   top: 50%;
   transform: translateY(-50%);
   font-family: var(--font-mono);
-  font-size: 0.875rem;
-  font-weight: 600;
+  font-size: 0.9375rem;
+  font-weight: 700;
   color: var(--color-accent);
   pointer-events: none;
   z-index: 1;
 }
 
 .input-with-prefix .form-input {
-  padding-left: 44px;
+  padding-left: 52px;
   font-family: var(--font-mono);
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 1.125rem;
+  font-weight: 700;
 }
 
-/* Toggle / Switch */
+/* Preset Amount Pills */
+.preset-amount-pills {
+  display: flex;
+  gap: var(--space-xs);
+  margin-top: 8px;
+}
+
+.preset-pill {
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.preset-pill:hover,
+.preset-pill:focus {
+  background: var(--color-accent-soft);
+  color: var(--color-text-primary);
+  border-color: var(--color-accent);
+}
+
+.preset-pill:active {
+  transform: scale(0.95);
+}
+
+/* Toggle / Switch — Premium Feel */
 .form-toggle {
   display: flex;
   align-items: center;
@@ -91,46 +127,48 @@
 }
 
 .form-toggle__label {
-  font-size: 0.9375rem;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 700;
   color: var(--color-text-primary);
+  letter-spacing: -0.01em;
 }
 
 .form-toggle__sub {
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   color: var(--color-text-secondary);
-  margin-top: 2px;
+  margin-top: 4px;
 }
 
 .toggle-switch {
-  width: 44px;
-  height: 24px;
-  background: var(--color-bg-tertiary);
+  width: 48px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-full);
   position: relative;
-  transition: background var(--transition-mid);
+  transition: all var(--transition-mid);
   flex-shrink: 0;
   cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .toggle-switch.on { background: var(--color-accent); }
 
 .toggle-switch::after {
   content: '';
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   background: white;
   border-radius: var(--radius-full);
   position: absolute;
   top: 3px;
   left: 3px;
-  transition: transform var(--transition-mid);
-  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  transition: all var(--transition-mid) cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .toggle-switch.on::after { transform: translateX(20px); }
 
-/* Radio pills (category selector) */
+/* Radio pills (category selector) — Premium Segmented Control */
 .radio-pills {
   display: flex;
   flex-wrap: wrap;
@@ -142,30 +180,34 @@
 }
 
 .radio-pill + label {
-  padding: var(--space-xs) var(--space-md);
-  background: var(--color-bg-primary);
-  border: 1.5px solid var(--color-border);
+  padding: var(--space-xs) var(--space-lg);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-full);
-  font-size: 0.8125rem;
-  font-weight: 500;
+  font-size: 0.875rem;
+  font-weight: 700;
   color: var(--color-text-secondary);
   cursor: pointer;
   transition: all var(--transition-fast);
   white-space: nowrap;
-  min-height: 36px;
+  min-height: 40px;
   display: flex;
   align-items: center;
+  opacity: 0.7;
 }
 
 .radio-pill:checked + label {
-  background: rgba(201,168,76,0.15);
+  background: var(--color-accent);
   border-color: var(--color-accent);
-  color: var(--color-accent);
+  color: #ffffff;
+  opacity: 1;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
 /* Form hint */
 .form-hint {
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
   color: var(--color-text-secondary);
   margin-top: var(--space-xs);
 }
@@ -178,5 +220,5 @@
 .form-divider {
   height: 1px;
   background: var(--color-border);
-  margin: var(--space-lg) 0;
+  margin: var(--space-xl) 0;
 }

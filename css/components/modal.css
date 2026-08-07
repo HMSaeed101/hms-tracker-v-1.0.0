@@ -1,40 +1,33 @@
 /* components/modal.css */
 
-/* Backdrop */
+/* Backdrop — Deep Dim */
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: var(--color-overlay);
+  background: rgba(0, 0, 0, 0.85);
   z-index: 200;
   display: none;
-  align-items: flex-end; /* Mobile: Bottom sheet */
+  align-items: flex-end;
   justify-content: center;
-  backdrop-filter: blur(8px); /* Increased blur */
-  -webkit-backdrop-filter: blur(8px);
 }
 
 .modal-backdrop.open {
   display: flex;
-  animation: backdropIn var(--transition-mid) ease both;
 }
 
-@keyframes backdropIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-/* Modal / Bottom sheet */
+/* Modal / Drawer — Structural & Opaque */
 .modal {
-  background: var(--color-bg-secondary);
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  border-bottom: none;
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   width: 100%;
-  max-width: 520px;
-  max-height: 90dvh;
+  max-width: 560px;
+  max-height: 95dvh;
   overflow-y: auto;
   overscroll-behavior: contain;
   padding-bottom: env(safe-area-inset-bottom);
-  animation: sheetIn var(--transition-slow) cubic-bezier(0.32, 1, 0.2, 1) both;
-  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.4);
+  animation: sheetIn 200ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes sheetIn {
@@ -42,99 +35,85 @@
   to   { transform: translateY(0); }
 }
 
-/* Drag handle - Mobile only */
-.modal::before {
-  content: '';
-  display: block;
-  width: 36px;
-  height: 4px;
-  background: var(--color-bg-tertiary);
-  border-radius: var(--radius-full);
-  margin: var(--space-md) auto var(--space-sm);
-}
-
 @media (min-width: 768px) {
   .modal-backdrop {
-    align-items: center; /* Desktop: Centered modal */
+    align-items: center;
   }
 
   .modal {
-    border-radius: var(--radius-lg);
-    animation: modalIn var(--transition-mid) cubic-bezier(0.16, 1, 0.3, 1) both;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    animation: modalIn 150ms linear both;
     padding-bottom: 0;
-    max-height: 80dvh;
-  }
-
-  .modal::before {
-    display: none; /* Hide drag handle on desktop */
+    max-height: 85dvh;
+    box-shadow: 0 32px 64px rgba(0, 0, 0, 0.8);
   }
 
   @keyframes modalIn {
-    from { opacity: 0; transform: scale(0.95) translateY(10px); }
-    to   { opacity: 1; transform: scale(1) translateY(0); }
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 }
 
-/* Modal header */
+/* Modal header — Typographic focus */
 .modal__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 var(--space-lg) var(--space-md);
+  padding: var(--space-lg);
   border-bottom: 1px solid var(--color-border);
 }
 
 .modal__title {
-  font-size: 1.125rem;
+  font-size: 16px;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
   color: var(--color-text-primary);
 }
 
 .modal__close {
-  width: 40px; /* Larger for mobile */
-  height: 40px;
-  border-radius: var(--radius-sm);
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-text-secondary);
-  transition: background var(--transition-fast);
+  color: var(--color-text-muted);
+  transition: color var(--transition-fast);
 }
 
-@media (hover: hover) {
-  .modal__close:hover { background: var(--color-bg-tertiary); color: var(--color-accent); }
-}
+.modal__close:hover { color: var(--color-text-primary); }
 
 /* Modal body */
 .modal__body {
   padding: var(--space-lg);
 }
 
-/* Modal tabs */
+/* Modal tabs — Segmented structural control */
 .modal-tabs {
   display: flex;
+  background: var(--color-bg-secondary);
   border-bottom: 1px solid var(--color-border);
-  padding: 0 var(--space-lg);
-  gap: var(--space-sm);
-  overflow-x: auto; /* Allow scroll if many tabs */
-  scrollbar-width: none;
+  padding: 4px;
+  gap: 4px;
 }
 
-.modal-tabs::-webkit-scrollbar { display: none; }
-
 .modal-tab {
-  padding: var(--space-md) var(--space-md);
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--color-text-secondary);
-  border-bottom: 3px solid transparent;
+  flex: 1;
+  padding: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  border-radius: var(--radius-sm);
   transition: all var(--transition-fast);
-  white-space: nowrap;
+  text-align: center;
 }
 
 .modal-tab.active {
-  color: var(--color-accent);
-  border-bottom-color: var(--color-accent);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
 }
 
 .modal-tab-panel { display: none; padding: var(--space-lg); }

@@ -202,6 +202,7 @@ async function afterUnlock() {
 
   hidePinScreen();
   initApp();
+  updateZakatVisibility();
 }
 
 // ─────────────────────────────────────────
@@ -219,9 +220,17 @@ function initApp() {
 
   // Register routes
   router.register('dashboard', () => dashPage.init());
-  router.register('assets',    () => assetsPage.init());
+  router.register('assets',    () => {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-portfolio')?.classList.add('active');
+    portfolioPage.init();
+  });
   router.register('expenses',  () => expensesPage.init());
-  router.register('goals',     () => goalsPage.init());
+  router.register('goals',     () => {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-portfolio')?.classList.add('active');
+    portfolioPage.init();
+  });
   router.register('zakat',     () => zakatPage.init());
   router.init();
 
@@ -339,9 +348,14 @@ function initForms() {
     const source = fd.get('source');
     if (!amount || amount <= 0 || !source) { render.toast('Fill in amount and source', 'warning'); return; }
     const sweeps = goalsStore.processAutoSweep(amount);
-    transactionsStore.addIncome(amount, source, fd.get('note')||'', fd.get('date')||today());
-    sweeps.forEach(sw => render.toast(`⚡ Rs ${sw.amount.toLocaleString()} swept to "${sw.title}"`, 'info', 4000));
-    render.toast('Income logged ✓', 'success');
+    transactionsStore.addIncome(amount, source, fd.get('note')||'', fd.get('date')||today(), sweeps);
+    if (sweeps && sweeps.length > 0) {
+      const totalSwept = sweeps.reduce((sum, s) => sum + s.amount, 0);
+      sweeps.forEach(sw => render.toast(`⚡ Rs ${sw.amount.toLocaleString()} swept to "${sw.title}"`, 'info', 4000));
+      render.toast(`Income logged (Rs ${totalSwept.toLocaleString()} auto-swept to goals) ✓`, 'success');
+    } else {
+      render.toast('Income logged ✓', 'success');
+    }
     e.target.reset(); setTodayOnDates(e.target);
     closeModal('quick-log-modal');
     refreshCurrentPage();
@@ -358,6 +372,22 @@ function initForms() {
     e.target.reset(); setTodayOnDates(e.target);
     closeModal('quick-log-modal');
     refreshCurrentPage();
+  });
+
+  // Preset Amount Pills click handler
+  document.addEventListener('click', e => {
+    const pill = e.target.closest('.preset-pill');
+    if (!pill) return;
+    const amount = parseFloat(pill.dataset.amount) || 0;
+    const form = pill.closest('form');
+    if (form) {
+      const input = form.querySelector('input[name="amount"]');
+      if (input) {
+        const val = parseFloat(input.value) || 0;
+        input.value = val + amount;
+        input.focus();
+      }
+    }
   });
 
   // Add Cash
@@ -434,6 +464,34 @@ function initSettings() {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle.click(); }
   });
 
+  // Zakat Visibility Toggle
+  const zakatToggle = document.getElementById('zakat-toggle');
+  if (zakatToggle) {
+    const showZakat = settingsStore.getShowZakat();
+    zakatToggle.classList.toggle('on', showZakat);
+    zakatToggle.setAttribute('aria-checked', String(showZakat));
+  }
+  zakatToggle?.addEventListener('click', () => {
+    const isOn = zakatToggle.classList.toggle('on');
+    zakatToggle.setAttribute('aria-checked', String(isOn));
+    settingsStore.setShowZakat(isOn);
+    updateZakatVisibility();
+    if (router.current() === 'dashboard') dashPage.refresh();
+  });
+  zakatToggle?.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); zakatToggle.click(); }
+  });
+
+  // Reflection style selection
+  const refStyleSelect = document.getElementById('reflection-style-select');
+  if (refStyleSelect) {
+    refStyleSelect.value = settingsStore.getReflectionStyle();
+  }
+  refStyleSelect?.addEventListener('change', () => {
+    settingsStore.setReflectionStyle(refStyleSelect.value);
+    if (router.current() === 'dashboard') dashPage.refresh();
+  });
+
   // Rates form
   on('rates-form', 'submit', e => {
     e.preventDefault();
@@ -448,6 +506,16 @@ function initSettings() {
     render.rates(settingsStore.getRates());
     closeModal('rates-modal');
     if (router.current() === 'zakat') zakatPage.refresh();
+  });
+
+  on('rates-preset-btn', 'click', () => {
+    const usdEl = document.getElementById('rate-usd-input');
+    const goldEl = document.getElementById('rate-gold-input');
+    const silverEl = document.getElementById('rate-silver-input');
+    if (usdEl) usdEl.value = '278.5';
+    if (goldEl) goldEl.value = '285000';
+    if (silverEl) silverEl.value = '2800';
+    render.toast('Loaded market benchmarks ✓', 'info');
   });
 
   on('rates-stamp-btn', 'click', () => {
@@ -476,6 +544,38 @@ function initSettings() {
   // Import
   on('import-json-btn', 'click', () => document.getElementById('import-file-input')?.click());
   on('import-file-input', 'change', handleImport);
+
+  // Initial Zakat visibility sync
+  updateZakatVisibility();
+}
+
+function updateZakatVisibility() {
+  const showZakat = settingsStore.getShowZakat();
+  
+  // Update nav item visibility
+  const zakatNavItem = document.querySelector('.nav-item[data-route="zakat"]');
+  if (zakatNavItem) {
+    zakatNavItem.style.display = showZakat ? '' : 'none';
+    
+    // Adjust bottom nav grid columns on mobile
+    const bottomNav = document.querySelector('.bottom-nav');
+    if (bottomNav) {
+      bottomNav.classList.toggle('bottom-nav--four-cols', !showZakat);
+    }
+  }
+
+  // Update Zakat nudge visibility on Dashboard
+  const zakatNudge = document.getElementById('zakat-nudge');
+  if (zakatNudge) {
+    if (!showZakat) {
+      zakatNudge.style.setProperty('display', 'none', 'important');
+    }
+  }
+
+  // Redirect if currently on disabled zakat route
+  if (!showZakat && router.current() === 'zakat') {
+    router.navigate('dashboard');
+  }
 }
 
 // ─────────────────────────────────────────

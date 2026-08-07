@@ -1,158 +1,163 @@
 /* pages/zakat.css */
 
-/* Zakat status hero */
+/* Zakat Hero Area — Deep Structural Data */
 .zakat-hero {
-  background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(15,52,96,0.6));
-  border: 1px solid rgba(201,168,76,0.25);
-  border-radius: var(--radius-lg);
-  padding: var(--space-lg);
-  margin-bottom: var(--space-md);
-  text-align: center;
+  padding: 48px 0;
+  margin-bottom: 32px;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .zakat-hero__status {
-  font-size: 0.6875rem;
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--color-accent);
-  margin-bottom: var(--space-sm);
+  margin-bottom: 12px;
 }
 
 .zakat-hero__amount {
-  font-family: var(--font-mono);
-  font-size: clamp(1.75rem, 7vw, 2.5rem);
+  font-family: var(--font-sans);
+  font-size: clamp(40px, 10vw, 64px);
   font-weight: 700;
-  color: var(--color-accent);
-  letter-spacing: -0.03em;
-  line-height: 1;
-  margin-bottom: var(--space-sm);
+  color: var(--color-text-primary);
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+  margin-bottom: 16px;
 }
 
 .zakat-hero__label {
-  font-size: 0.875rem;
-  color: var(--color-text-secondary);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
 }
 
 .zakat-hero__projection {
-  margin-top: var(--space-md);
-  font-size: 0.875rem;
-  color: var(--color-text-secondary);
-  background: rgba(201,168,76,0.06);
-  border-radius: var(--radius-sm);
-  padding: var(--space-sm) var(--space-md);
+  margin-top: 32px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  border-left: 2px solid var(--color-accent);
+  padding-left: 16px;
 }
 
 .zakat-hero__projection strong {
-  color: var(--color-accent);
+  color: var(--color-text-primary);
   font-family: var(--font-mono);
 }
 
-/* Nisab tracker */
+/* Nisab Tracker — Structural Grid */
 .nisab-card {
   background: var(--color-bg-secondary);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  padding: var(--space-lg);
-  margin-bottom: var(--space-md);
+  padding: 24px;
+  margin-bottom: 32px;
 }
 
 .nisab-toggle {
   display: flex;
-  gap: var(--space-xs);
-  margin-bottom: var(--space-md);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 2px;
+  margin-bottom: 24px;
 }
 
 .nisab-toggle-btn {
   flex: 1;
-  height: 34px;
-  border-radius: var(--radius-sm);
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: var(--color-text-secondary);
-  background: var(--color-bg-primary);
-  border: 1px solid var(--color-border);
+  height: 32px;
+  border: none;
+  border-radius: 2px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  background: transparent;
   transition: all var(--transition-fast);
 }
 
 .nisab-toggle-btn.active {
-  background: rgba(201,168,76,0.15);
-  color: var(--color-accent);
-  border-color: var(--color-accent);
+  background: var(--color-border);
+  color: var(--color-text-primary);
 }
 
-/* Hawl countdown */
+/* Hawl Countdown — Monospace Precision */
 .hawl-countdown {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: 16px;
   align-items: center;
-  justify-content: center;
-  gap: var(--space-md);
-  margin: var(--space-lg) 0;
-}
-
-.hawl-unit {
+  margin: 32px 0;
   text-align: center;
 }
 
 .hawl-unit__value {
   font-family: var(--font-mono);
-  font-size: 2rem;
+  font-size: 32px;
   font-weight: 700;
-  color: var(--color-accent);
+  color: var(--color-text-primary);
   line-height: 1;
+  letter-spacing: -0.05em;
 }
 
 .hawl-unit__label {
-  font-size: 0.625rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--color-text-secondary);
-  margin-top: 2px;
+  color: var(--color-text-muted);
+  margin-top: 8px;
 }
 
 .hawl-divider {
-  font-size: 1.5rem;
-  color: var(--color-text-secondary);
-  margin-bottom: 12px;
+  width: 1px;
+  height: 48px;
+  background: var(--color-border);
 }
 
-/* Payment log */
+/* Payment log — Tight industrial list */
 .payment-log-item {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  padding: var(--space-md) 0;
+  align-items: center;
+  padding: 16px 0;
   border-bottom: 1px solid var(--color-border);
 }
 
-.payment-log-item:last-child { border-bottom: none; }
-
 .payment-log-item__recipient {
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 700;
   color: var(--color-text-primary);
 }
 
 .payment-log-item__date {
-  font-size: 0.75rem;
-  color: var(--color-text-secondary);
-  margin-top: 2px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--color-text-muted);
+  margin-top: 4px;
 }
 
 .payment-log-item__amount {
   font-family: var(--font-mono);
-  font-size: 0.9375rem;
+  font-size: 14px;
   font-weight: 700;
   color: var(--color-success);
 }
 
-/* Sadaqah section */
+/* Sadaqah section — Data block */
 .sadaqah-total {
   font-family: var(--font-mono);
-  font-size: 1.25rem;
+  font-size: 24px;
   font-weight: 700;
   color: var(--color-success);
   text-align: center;
-  margin: var(--space-sm) 0;
+  margin: 16px 0;
+  letter-spacing: -0.02em;
 }

@@ -1,17 +1,27 @@
 {
-  "prompts": [
+  "spiritual": [
+    "Have you thanked Allah for your rizq today?",
+    "Is your Zakat calculation up to date? Purification is growth.",
+    "Baraka comes in honest wealth. Is yours earned with integrity?",
+    "Every rupee is provision (rizq). Are you deploying yours as a good trustee?",
+    "Charity does not decrease wealth. Have you logged your Sadaqah today?",
+    "Wealth is a trial and a trust. How did you honor that trust today?",
+    "Seeking halal earning is an obligation. Is your work aligned with this?",
+    "Praise be to Allah for another day to work, build, and give.",
+    "Are you tracking your goals to serve a higher purpose or simple consumption?",
+    "True richness is the richness of the soul. Reflect on your blessings."
+  ],
+  "general": [
     "What is one financial habit you want to build this week?",
     "Where did your money work hardest for you this month?",
     "What would your future self thank you for doing with money today?",
     "Name one unnecessary expense you can eliminate this week.",
     "How much closer are you to your biggest goal since last month?",
     "What does financial freedom mean to you right now?",
-    "Have you thanked Allah for your rizq today?",
     "What is the best investment you have made in yourself this year?",
     "Are your spending patterns aligned with your values?",
     "What would you do differently if your income doubled tomorrow?",
     "Which of your assets is working hardest while you sleep?",
-    "Is your Zakat calculation up to date? Purification is growth.",
     "What small daily action would compound into wealth in 10 years?",
     "Are you building assets or consuming them?",
     "What did you learn about money this week?",
@@ -28,7 +38,6 @@
     "Every rupee is capital. Are you deploying yours with intention?",
     "What is your current savings rate? Is it enough?",
     "What would Rs 10,000 invested today be worth in 20 years?",
-    "Are you building for the next week, the next year, or the next decade?",
-    "Baraka comes in honest wealth. Is yours earned with integrity?"
+    "Are you building for the next week, the next year, or the next decade?"
   ]
 }

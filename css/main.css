@@ -24,39 +24,22 @@ body {
   font-family: var(--font-sans);
   min-height: 100vh;
   position: relative;
-  /* Centering the app for desktop */
   max-width: var(--breakpoint-md);
   margin: 0 auto;
+  overflow-x: hidden;
 }
 
-/* Atmospheric texture */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image: url('../assets/icons/icon-512.png'); /* Fallback/Placeholder for texture */
-  background-size: 200px;
-  background-repeat: repeat;
-  opacity: 0.03; /* Very subtle */
-  filter: grayscale(1) invert(1);
-  pointer-events: none;
-  z-index: -1;
-}
-
-/* Subtle gradient overlay for depth */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle at top center, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: -1;
+/* Structural Container Utility */
+.structural-panel {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
 }
 
 /* Larger screens layout adjustments */
 @media (min-width: 768px) {
   body {
-    max-width: 100%; /* Allow full width but use a container */
+    max-width: 100%;
   }
   
   #app-shell {
@@ -65,3 +48,13 @@ body::after {
     padding: 0 var(--space-xl);
   }
 }
+
+/* Utility: High-precision rhythm spacers */
+.mt-8 { margin-top: 8px; }
+.mt-16 { margin-top: 16px; }
+.mt-24 { margin-top: 24px; }
+.mb-8 { margin-bottom: 8px; }
+.mb-16 { margin-bottom: 16px; }
+.mb-24 { margin-bottom: 24px; }
+.p-16 { padding: 16px; }
+.p-24 { padding: 24px; }

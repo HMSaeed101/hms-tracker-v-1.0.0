@@ -80,10 +80,20 @@ render.dashboard = function({ netWorth, velocity, snapshots, monthTotals, goals,
   // Sparkline
   const sparkEl = document.getElementById('sparkline');
   if (sparkEl && snapshots.length >= 2) {
-    const points = historyToPoints(snapshots.slice(-30));
-    const color  = velocity >= 0 ? 'var(--color-success)' : 'var(--color-danger)';
+    const pointsStr  = historyToPoints(snapshots.slice(-30));
+    const pointArray = pointsStr.split(' ').filter(Boolean);
+    const lastPoint  = pointArray.length ? pointArray[pointArray.length - 1].split(',') : [200, 20];
+    const color      = velocity >= 0 ? 'var(--color-success)' : 'var(--color-danger)';
     sparkEl.innerHTML = `<svg viewBox="0 0 200 40" role="img" aria-label="30-day capital trend" class="sparkline">
-      <polyline points="${points}" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+      <defs>
+        <linearGradient id="sparkGradient" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="${color}" stop-opacity="0.35"/>
+          <stop offset="100%" stop-color="${color}" stop-opacity="0.0"/>
+        </linearGradient>
+      </defs>
+      <polygon points="0,40 ${pointsStr} 200,40" fill="url(#sparkGradient)" />
+      <polyline points="${pointsStr}" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+      <circle cx="${lastPoint[0]}" cy="${lastPoint[1]}" r="3" fill="${color}" />
     </svg>`;
   }
 
@@ -353,6 +363,15 @@ render.goalsList = function(goals) {
     const daysLeft  = g.deadline ? daysUntil(g.deadline) : null;
     const dayCls    = daysLeft === null ? '' : daysLeft < 0 ? 'goal-card__days--urgent' : daysLeft < 30 ? 'goal-card__days--urgent' : 'goal-card__days--good';
     const dayStr    = daysLeft === null ? '' : daysLeft < 0 ? 'Overdue' : daysLeft === 0 ? 'Due today' : `${daysLeft}d left`;
+
+    let paceStr = '';
+    if (!g.completed && daysLeft !== null && daysLeft > 0 && g.savedPKR < g.targetPKR) {
+      const monthsLeft = Math.max(1, Math.ceil(daysLeft / 30));
+      const remPKR = g.targetPKR - g.savedPKR;
+      const monthlyRate = Math.ceil(remPKR / monthsLeft);
+      paceStr = `<span class="goal-card__pace-badge">Pace: ${formatPKR(monthlyRate)}/mo</span>`;
+    }
+
     return `<div class="goal-card${g.completed ? ' goal-card--completed' : ''}">
       <div class="goal-card__header">
         <div>
@@ -368,6 +387,7 @@ render.goalsList = function(goals) {
       <div class="progress-bar-wrap"><div class="progress-bar ${colorCls}" style="width:${pct}%"></div></div>
       <div class="goal-card__progress-text">
         <span class="goal-card__pct">${pct}%</span>
+        ${paceStr}
         ${dayStr ? `<span class="${dayCls}">${dayStr}</span>` : ''}
       </div>
       ${!g.completed ? `<div class="goal-card__actions">
@@ -444,6 +464,13 @@ render.hawlCountdown = function(daysRemaining) {
   const m = document.getElementById('hawl-months');
   if (d) d.textContent = String(rem).padStart(2, '0');
   if (m) m.textContent = String(months).padStart(2, '0');
+
+  const daysElapsed = Math.max(0, 354 - days);
+  const pct = Math.min(100, Math.round((daysElapsed / 354) * 100));
+  const bar = document.getElementById('hawl-progress-bar');
+  const text = document.getElementById('hawl-progress-text');
+  if (bar) bar.style.width = pct + '%';
+  if (text) text.textContent = `${pct}% of Hawl Completed (${daysElapsed} of 354 days)`;
 };
 
 // ─────────────────────────────────────────
@@ -472,7 +499,13 @@ render.pinCooldown = function(seconds) {
 // ─────────────────────────────────────────
 render._emptyState = function(title, text) {
   return `<div class="empty-state">
-    <div class="empty-state__icon">✦</div>
+    <div class="empty-state__icon">
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+    </div>
     <div class="empty-state__title">${title}</div>
     <div class="empty-state__text">${text}</div>
   </div>`;

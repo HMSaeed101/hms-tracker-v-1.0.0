@@ -7,7 +7,7 @@ import { settingsStore } from '../stores/settingsStore.js';
 import render from '../render.js';
 import { calcNetWorth, calcVelocity, monthKey } from '../utils.js';
 
-let _prompts = [];
+let _promptsObj = null;
 let _initialized = false;
 
 export async function init() {
@@ -16,9 +16,8 @@ export async function init() {
     // Load prompts
     try {
       const resp = await fetch('./prompts.json');
-      const data = await resp.json();
-      _prompts = data.prompts || [];
-    } catch { _prompts = []; }
+      _promptsObj = await resp.json();
+    } catch { _promptsObj = null; }
   }
   refresh();
 }
@@ -47,8 +46,10 @@ export function refresh() {
   }
 
   // Daily prompt (rotate by day of year)
+  const style = settingsStore.getReflectionStyle();
+  const promptList = (_promptsObj && _promptsObj[style]) || [];
   const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
-  const prompt = _prompts.length ? _prompts[dayOfYear % _prompts.length] : '';
+  const prompt = promptList.length ? promptList[dayOfYear % promptList.length] : '';
 
   render.dashboard({
     netWorth,

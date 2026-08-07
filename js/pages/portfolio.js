@@ -86,9 +86,13 @@ export function init() {
     });
   }
 
-  // Handle URL param ?tab=goals
+  // Handle URL route hash or query parameters
   const hash = window.location.hash;
-  if (hash.includes('?')) {
+  if (hash.startsWith('#goals') || hash.includes('tab=goals')) {
+    _activePortfolioTab = 'goals';
+  } else if (hash.startsWith('#assets') || hash.includes('tab=assets')) {
+    _activePortfolioTab = 'assets';
+  } else if (hash.includes('?')) {
     const params = new URLSearchParams(hash.split('?')[1]);
     if (params.get('tab') === 'goals') _activePortfolioTab = 'goals';
     else if (params.get('tab') === 'assets') _activePortfolioTab = 'assets';

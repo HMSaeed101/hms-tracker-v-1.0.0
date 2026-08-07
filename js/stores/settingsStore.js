@@ -24,6 +24,22 @@ export const settingsStore = {
     save();
   },
 
+  // Zakat Visibility & Reflection Style
+  getShowZakat() {
+    return s().showZakat !== false; // defaults to true
+  },
+  setShowZakat(val) {
+    s().showZakat = !!val;
+    save();
+  },
+  getReflectionStyle() {
+    return s().reflectionStyle || 'spiritual'; // defaults to 'spiritual'
+  },
+  setReflectionStyle(style) {
+    s().reflectionStyle = style;
+    save();
+  },
+
   // Export date
   getLastExportDate()    { return s().lastExportDate; },
   setLastExportDate(d)   { s().lastExportDate = d; save(); },

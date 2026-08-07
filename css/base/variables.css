@@ -1,58 +1,47 @@
 /* base/variables.css */
 :root {
-	/* ── Colors — Natural & Grounded ── */
-	--color-bg-primary: #121212; /* Deep matte black */
-	--color-bg-secondary: #1e1e1e; /* Card background - solid matte */
-	--color-bg-tertiary: #262626; /* Elevated surface */
-	--color-accent: #d4af37; /* Antique gold - softer focal point */
-	--color-accent-soft: #b89730; /* Muted gold */
-	--color-text-primary: #f0ead6; /* Warm white - primary text */
-	--color-text-secondary: #bdb7ab; /* Sand/Stone - warmer muted text */
-	--color-success: #88a096; /* Sage green - organic growth */
-	--color-danger: #cd5c5c; /* Indian red - softer warning */
-	--color-warning: #cc9966; /* Wood/Tan - warmer warning */
-	--color-border: rgba(189, 183, 171, 0.08); /* Minimal border */
-	--color-overlay: rgba(10, 10, 10, 0.9);
+	/* ── Colors — The Precision Monochrome ── */
+	--color-bg-primary: #000000; /* Deepest Black */
+	--color-bg-secondary: #0a0a0a; /* Subtle elevation */
+	--color-bg-tertiary: #111111; /* More elevation */
+	--color-accent: #6366f1; /* Sharp Indigo */
+	--color-accent-soft: rgba(99, 102, 241, 0.1);
+	--color-text-primary: #ffffff; /* High Contrast White */
+	--color-text-secondary: #888888; /* Mid Gray */
+	--color-text-muted: #555555; /* Low Gray */
+	--color-success: #10b981; /* Precise Emerald */
+	--color-danger: #ef4444; /* Sharp Red */
+	--color-warning: #f59e0b; /* Amber */
+	--color-border: #222222; /* Razor Hairline */
+	--color-overlay: rgba(0, 0, 0, 0.9);
 
-	/* ── Spacing scale (more "breathing" room) ── */
+	/* ── Precision Grid (Strict 8px) ── */
+	--space-unit: 8px;
 	--space-xs: 4px;
 	--space-sm: 8px;
-	--space-md: 18px; /* Increased from 16px */
-	--space-lg: 26px; /* Increased from 24px */
-	--space-xl: 36px;
-	--space-2xl: 52px;
+	--space-md: 16px;
+	--space-lg: 24px;
+	--space-xl: 32px;
+	--space-2xl: 48px;
+	--space-3xl: 64px;
 
-	/* ── Radius (softer corners) ── */
-	--radius-sm: 10px;
-	--radius-md: 16px;
-	--radius-lg: 24px;
+	/* ── Radius (Tight Precision) ── */
+	--radius-sm: 4px;
+	--radius-md: 8px;
+	--radius-lg: 12px;
 	--radius-full: 9999px;
 
 	/* ── Typography ── */
-	--font-sans: "Sora", system-ui, sans-serif;
-	--font-mono: "JetBrains Mono", "Fira Code", monospace;
+	--font-sans: "Outfit", system-ui, sans-serif;
+	--font-mono: "Space Mono", monospace;
 
-	/* ── Shadows (tactile depth) ── */
-	--shadow-card: 0 12px 40px rgba(0, 0, 0, 0.5);
-	--shadow-modal: 0 24px 60px rgba(0, 0, 0, 0.7);
-	--shadow-fab: 0 8px 32px rgba(0, 0, 0, 0.5);
+	/* ── Shadows (Minimalist / None) ── */
+	--shadow-card: 0 1px 3px rgba(0, 0, 0, 0.5);
+	--shadow-modal: 0 16px 48px rgba(0, 0, 0, 0.8);
 
-	/* ── Transitions ── */
-	--transition-fast: 150ms ease;
-	--transition-mid: 300ms ease;
-	--transition-slow: 500ms ease;
-
-	/* ── Category colors (natural tones) ── */
-	--cat-myself: #8e7cc3;
-	--cat-food: #cc9966;
-	--cat-education: #76a5af;
-	--cat-unexpected: #cd5c5c;
-	--cat-other: #999999;
-	--cat-invest-lt: #6d9eeb;
-
-	/* ── Navbar ── */
-	--navbar-height: 64px;
-	--bottom-nav-height: 72px;
+	/* ── Transitions (Fast / Linear) ── */
+	--transition-fast: 100ms linear;
+	--transition-mid: 200ms cubic-bezier(0.16, 1, 0.3, 1);
 
 	/* ── Breakpoints ── */
 	--breakpoint-sm: 640px;
@@ -60,18 +49,16 @@
 	--breakpoint-lg: 1024px;
 }
 
-/* ── Light mode (Natural Sand theme) ── */
-@media (prefers-color-scheme: light) {
-	:root {
-		--color-bg-primary: #fcfaf7; /* Off-white sand */
-		--color-bg-secondary: #ffffff;
-		--color-bg-tertiary: #f5f2ed;
-		--color-text-primary: #2d2a26;
-		--color-text-secondary: #7a746a;
-		--color-border: rgba(45, 42, 38, 0.06);
-		--color-overlay: rgba(252, 250, 247, 0.95);
-		--shadow-card: 0 8px 30px rgba(45, 42, 38, 0.08);
-	}
+/* Light Mode — Pure Paper theme */
+[data-theme="light"] {
+	--color-bg-primary: #ffffff;
+	--color-bg-secondary: #f9f9f9;
+	--color-bg-tertiary: #f0f0f0;
+	--color-text-primary: #000000;
+	--color-text-secondary: #666666;
+	--color-text-muted: #999999;
+	--color-border: #e0e0e0;
+	--color-overlay: rgba(255, 255, 255, 0.9);
 }
 
 /* Specific theme overrides */

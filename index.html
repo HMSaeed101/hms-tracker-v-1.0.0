@@ -23,7 +23,7 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap"
 			rel="stylesheet"
 		/>
 		<link rel="stylesheet" href="css/main.css" />
@@ -490,6 +490,10 @@
 								<div class="hawl-unit__label">Days</div>
 							</div>
 						</div>
+						<div class="progress-bar-wrap" style="margin-top: var(--space-md)">
+							<div class="progress-bar progress-bar--accent" id="hawl-progress-bar" style="width: 0%"></div>
+						</div>
+						<div class="caption text-muted" id="hawl-progress-text" style="margin-top: 6px; text-align: center;">0% of Hawl Completed</div>
 					</div>
 				</div>
 
@@ -728,6 +732,12 @@
 									required
 								/>
 							</div>
+							<div class="preset-amount-pills">
+								<button type="button" class="preset-pill" data-amount="100">+100</button>
+								<button type="button" class="preset-pill" data-amount="500">+500</button>
+								<button type="button" class="preset-pill" data-amount="1000">+1,000</button>
+								<button type="button" class="preset-pill" data-amount="5000">+5,000</button>
+							</div>
 						</div>
 						<div class="form-group">
 							<label class="form-label">Category</label>
@@ -814,6 +824,12 @@
 									step="1"
 									required
 								/>
+							</div>
+							<div class="preset-amount-pills">
+								<button type="button" class="preset-pill" data-amount="100">+100</button>
+								<button type="button" class="preset-pill" data-amount="500">+500</button>
+								<button type="button" class="preset-pill" data-amount="1000">+1,000</button>
+								<button type="button" class="preset-pill" data-amount="5000">+5,000</button>
 							</div>
 						</div>
 						<div class="form-group">
@@ -902,6 +918,12 @@
 									step="1"
 									required
 								/>
+							</div>
+							<div class="preset-amount-pills">
+								<button type="button" class="preset-pill" data-amount="100">+100</button>
+								<button type="button" class="preset-pill" data-amount="500">+500</button>
+								<button type="button" class="preset-pill" data-amount="1000">+1,000</button>
+								<button type="button" class="preset-pill" data-amount="5000">+5,000</button>
 							</div>
 						</div>
 						<div class="form-group">
@@ -1696,6 +1718,13 @@
 							<button
 								class="btn btn--secondary"
 								type="button"
+								id="rates-preset-btn"
+							>
+								Load Market Benchmarks
+							</button>
+							<button
+								class="btn btn--secondary"
+								type="button"
 								id="rates-stamp-btn"
 							>
 								Confirm Today's Date
@@ -1750,6 +1779,33 @@
 							tabindex="0"
 						></div>
 					</div>
+
+					<div class="form-divider"></div>
+					<div class="form-toggle">
+						<div>
+							<div class="form-toggle__label">Zakat &amp; Sadaqah</div>
+							<div class="form-toggle__sub">
+								Track Nisab, Hawl year countdown, and Sadaqah totals
+							</div>
+						</div>
+						<div
+							class="toggle-switch"
+							id="zakat-toggle"
+							role="switch"
+							aria-checked="true"
+							tabindex="0"
+						></div>
+					</div>
+
+					<div class="form-divider"></div>
+					<div class="form-group">
+						<label class="form-label" for="reflection-style-select">Daily Reflection Style</label>
+						<select class="form-select" id="reflection-style-select">
+							<option value="spiritual">Spiritual (Rizq, Zakat, Baraka, Quranic Wisdom)</option>
+							<option value="general">General (Personal Finance &amp; Habits)</option>
+						</select>
+					</div>
+
 					<div class="form-divider"></div>
 
 					<div class="section-title" style="padding-top: 0">Data</div>
