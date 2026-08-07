@@ -1,14 +1,14 @@
 # HMS Tracker — Copywriting & Branding Master Guide
-`File 13 of 13 | March 2026`
+`Updated | March 2026`
 
 ---
 
 ## 1. Brand Philosophy & Identity
 
-**HMS Tracker** is not a standard expense tracker or budget ledger. It is a **Personal Finance Command Center** built for a young Muslim entrepreneur in Pakistan.
+**HMS Tracker** is a **Personal Finance Command Center** built for intentional capital management and disciplined net worth growth.
 
 ### Core Brand Axiom
-> *"Money is not merely spent; it is capital deployed with intention. Wealth is not just accumulated; it is purified."*
+> *"Money is not merely spent; it is capital deployed with clear intention. Wealth is built through disciplined asset allocation and daily execution."*
 
 ---
 
@@ -22,9 +22,8 @@ Use this dictionary to maintain consistent branding across all screens, tooltips
 | **Daily Growth / Change** | **Capital Velocity** | Measures financial momentum in `+Rs X/day` calculated from 30-day delta. |
 | **Expense / Spending** | **Deploy Capital** | Replaces passive spending with intentional resource allocation. |
 | **Income / Earnings** | **Receive Capital** | Positions earnings as incoming resources to be assigned with purpose. |
-| **Zakat Due** | **Wealth Purification** | Focuses on spiritual purification (*Tazkiyah*) rather than a tax obligation. |
 | **Budget / Savings Target** | **Capital Target / Goal** | Shifts focus from restrictive budgets to goal-oriented capital growth. |
-| **Emergency Fund** | **Liquidity Reserve** | Emphasizes readiness and capital safety rather than panic. |
+| **Emergency Fund** | **Liquidity Reserve** | Emphasizes readiness and capital safety. |
 | **Investment** | **Capital Deployment (Yield)** | Tracks stocks, crypto, and physical assets in PKR/USD. |
 
 ---
@@ -76,26 +75,11 @@ Use this section to audit and refine the exact strings rendered in the UI.
 | UI Element | Current String | Brand Guidance / Context |
 |---|---|---|
 | Badge — Short Term | `Short-term` | Target duration under 12 months. |
-| Badge — Long Term | `Long-term` | Multi-year target (e.g. Hajj, Real Estate). |
+| Badge — Long Term | `Long-term` | Multi-year target (e.g. Property, Venture). |
 | Badge — Auto-Sweep | `⚡ Auto-Sweep X%` | Highlights automatic allocation from income. |
 | Pace Badge | `Pace: Rs X/mo` | Calculated monthly savings needed to hit deadline. |
 | Deadline — Good | `120d left` | Shown in emerald green when deadline is safe. |
 | Deadline — Urgent | `12d left` / `Overdue` | Shown in red when deadline is near or passed. |
-
----
-
-### 🌙 Zakat & Sadaqah Screen
-| UI Element | Current String | Brand Guidance / Context |
-|---|---|---|
-| Hero Card Title | `Zakat Due` | Live Zakat obligation calculated at 2.5%. |
-| Status 1 | `Below Nisab — Not Obligatory` | Net eligible assets are under current Nisab threshold. |
-| Status 2 | `Nisab Reached — Hawl in Progress` | Nisab crossed; 354-day lunar Hawl year active. |
-| Status 3 | `Zakat Due — Purify Your Wealth` | 354 days completed; Zakat payment due. |
-| Nisab Standard 1 | `Gold Standard (85g)` | Traditional Nisab standard (~85g 24K Gold). |
-| Nisab Standard 2 | `Silver Standard (595g)` | Alternative Nisab standard (~595g Pure Silver). |
-| Hawl Card Title | `Hawl (Lunar Year)` | Tracks progress towards 354 lunar days. |
-| Hawl Progress Text | `X% of Hawl Completed (Y of 354 days)` | Visual timeline percentage text. |
-| Projection Text | `At current velocity, next purification in ~X days` | Projection based on daily velocity. |
 
 ---
 
@@ -107,7 +91,7 @@ Use this section to audit and refine the exact strings rendered in the UI.
 | Tab 2 | `Receive Capital` | Income logging tab. |
 | Tab 3 | `Adjust` | Net worth manual adjustment tab. |
 | Preset Pills | `+100` `+500` `+1,000` `+5,000` | 1-tap quick amount increment pills. |
-| Expense Categories | `Myself` `Food & Chai` `Education` `Unexpected` | Custom category radio pills tailored for Saeed. |
+| Expense Categories | `Myself` `Food & Chai` `Education` `Unexpected` | Custom category radio pills. |
 
 ---
 
@@ -115,9 +99,7 @@ Use this section to audit and refine the exact strings rendered in the UI.
 | UI Element | Current String | Brand Guidance / Context |
 |---|---|---|
 | Theme Switch | `Light Mode` / `Dark Mode` | Switches color palette via CSS `data-theme`. |
-| Zakat Toggle | `Zakat & Sadaqah` | Show/hide Zakat tracking features. |
-| Reflection Style | `Spiritual` vs `General` | Selects prompt pool in `prompts.json`. |
-| Market Rates Button | `Load Market Benchmarks` | 1-click update for USD/Gold/Silver rates. |
+| Market Rates Button | `Load USD Rate Benchmark` | 1-click update for USD benchmark rate. |
 | Rate Stamp Button | `Confirm Today's Date` | Updates `lastUpdated` rate timestamp. |
 | Backup Buttons | `Export Backup` / `Import Backup` | Full JSON encryption backup actions. |
 | Danger Zone Button | `Wipe All Data & Reset App` | Factory reset button with double confirmation. |
@@ -135,7 +117,7 @@ Toasts should be short, functional, and include visual checkmarks (`✓`) or sta
 | Income Saved (Auto-Sweep) | `Income logged (Rs X auto-swept to goals) ✓` | `success` |
 | Auto-Sweep Triggered | `⚡ Rs X swept to "Goal Title"` | `info` |
 | Rates Updated | `Rates updated ✓` | `success` |
-| Market Presets Loaded | `Loaded market benchmarks ✓` | `info` |
+| Market Presets Loaded | `Loaded USD rate benchmark ✓` | `info` |
 | PIN Changed | `PIN changed ✓` | `success` |
 | Export Completed | `Backup exported ✓` | `success` |
 | Import Completed | `Data imported ✓ — reloading` | `success` |
@@ -143,24 +125,7 @@ Toasts should be short, functional, and include visual checkmarks (`✓`) or sta
 
 ---
 
-## 5. Daily Reflection Prompts (`prompts.json`)
-
-Reflection prompts rotate automatically by day of year (`dayOfYear % promptList.length`).
-
-### Spiritual Style Sample Copy
-- *"Are your financial goals serving your akhirah, or competing with it?"*
-- *"Barakah is not in the size of the number, but in the purity of the source."*
-- *"Have you calculated Zakat with exactness, or estimation?"*
-- *"Every rupee in your possession is a trust (Amanah). Deploy it with intention."*
-
-### General Style Sample Copy
-- *"Is your daily velocity positive or negative over the last 30 days?"*
-- *"Are you funding your priority targets before non-essential expenses?"*
-- *"Review your liquidity reserves — are you prepared for unexpected shifts?"*
-
----
-
-## 6. How to Edit & Customize Copy in Codebase
+## 5. How to Edit & Customize Copy in Codebase
 
 If you wish to modify any copy in the app:
 1. **Screen Labels & Headers**: Update HTML strings in [`index.html`](file:///D:/Work/projects/Apps/Finance%20Tracker/index.html).

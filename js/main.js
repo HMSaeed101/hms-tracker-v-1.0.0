@@ -5,14 +5,12 @@ import { onSaveHook } from './state.js';
 import { assetsStore }       from './stores/assetsStore.js';
 import { transactionsStore } from './stores/transactionsStore.js';
 import { goalsStore }        from './stores/goalsStore.js';
-import { zakatStore }        from './stores/zakatStore.js';
 import { settingsStore }     from './stores/settingsStore.js';
 import render                from './render.js';
 import * as router           from './router.js';
 import * as dashPage         from './pages/dashboard.js';
 import * as portfolioPage    from './pages/portfolio.js';
 import * as expensesPage     from './pages/expenses.js';
-import * as zakatPage        from './pages/zakat.js';
 import { isIOS, today, genId, debounce } from './utils.js';
 
 // ─────────────────────────────────────────
@@ -202,7 +200,6 @@ async function afterUnlock() {
 
   hidePinScreen();
   initApp();
-  updateZakatVisibility();
 }
 
 // ─────────────────────────────────────────
@@ -231,7 +228,6 @@ function initApp() {
     document.getElementById('page-portfolio')?.classList.add('active');
     portfolioPage.init();
   });
-  router.register('zakat',     () => zakatPage.init());
   router.init();
 
   // Inactivity lock
@@ -464,58 +460,23 @@ function initSettings() {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle.click(); }
   });
 
-  // Zakat Visibility Toggle
-  const zakatToggle = document.getElementById('zakat-toggle');
-  if (zakatToggle) {
-    const showZakat = settingsStore.getShowZakat();
-    zakatToggle.classList.toggle('on', showZakat);
-    zakatToggle.setAttribute('aria-checked', String(showZakat));
-  }
-  zakatToggle?.addEventListener('click', () => {
-    const isOn = zakatToggle.classList.toggle('on');
-    zakatToggle.setAttribute('aria-checked', String(isOn));
-    settingsStore.setShowZakat(isOn);
-    updateZakatVisibility();
-    if (router.current() === 'dashboard') dashPage.refresh();
-  });
-  zakatToggle?.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); zakatToggle.click(); }
-  });
-
-  // Reflection style selection
-  const refStyleSelect = document.getElementById('reflection-style-select');
-  if (refStyleSelect) {
-    refStyleSelect.value = settingsStore.getReflectionStyle();
-  }
-  refStyleSelect?.addEventListener('change', () => {
-    settingsStore.setReflectionStyle(refStyleSelect.value);
-    if (router.current() === 'dashboard') dashPage.refresh();
-  });
-
   // Rates form
   on('rates-form', 'submit', e => {
     e.preventDefault();
     const fd = new FormData(e.target);
     settingsStore.setRates({
-      usdPKR:      parseFloat(fd.get('usdPKR'))      || settingsStore.getRates().usdPKR,
-      gold10gPKR:  parseFloat(fd.get('gold10gPKR'))  || settingsStore.getRates().gold10gPKR,
-      silver1gPKR: parseFloat(fd.get('silver1gPKR')) || settingsStore.getRates().silver1gPKR,
+      usdPKR:      parseFloat(fd.get('usdPKR')) || settingsStore.getRates().usdPKR,
       lastUpdated: today(),
     });
     render.toast('Rates updated ✓', 'success');
     render.rates(settingsStore.getRates());
     closeModal('rates-modal');
-    if (router.current() === 'zakat') zakatPage.refresh();
   });
 
   on('rates-preset-btn', 'click', () => {
     const usdEl = document.getElementById('rate-usd-input');
-    const goldEl = document.getElementById('rate-gold-input');
-    const silverEl = document.getElementById('rate-silver-input');
     if (usdEl) usdEl.value = '278.5';
-    if (goldEl) goldEl.value = '285000';
-    if (silverEl) silverEl.value = '2800';
-    render.toast('Loaded market benchmarks ✓', 'info');
+    render.toast('Loaded USD rate benchmark ✓', 'info');
   });
 
   on('rates-stamp-btn', 'click', () => {
@@ -556,38 +517,6 @@ function initSettings() {
   // Import
   on('import-json-btn', 'click', () => document.getElementById('import-file-input')?.click());
   on('import-file-input', 'change', handleImport);
-
-  // Initial Zakat visibility sync
-  updateZakatVisibility();
-}
-
-function updateZakatVisibility() {
-  const showZakat = settingsStore.getShowZakat();
-  
-  // Update nav item visibility
-  const zakatNavItem = document.querySelector('.nav-item[data-route="zakat"]');
-  if (zakatNavItem) {
-    zakatNavItem.style.display = showZakat ? '' : 'none';
-    
-    // Adjust bottom nav grid columns on mobile
-    const bottomNav = document.querySelector('.bottom-nav');
-    if (bottomNav) {
-      bottomNav.classList.toggle('bottom-nav--four-cols', !showZakat);
-    }
-  }
-
-  // Update Zakat nudge visibility on Dashboard
-  const zakatNudge = document.getElementById('zakat-nudge');
-  if (zakatNudge) {
-    if (!showZakat) {
-      zakatNudge.style.setProperty('display', 'none', 'important');
-    }
-  }
-
-  // Redirect if currently on disabled zakat route
-  if (!showZakat && router.current() === 'zakat') {
-    router.navigate('dashboard');
-  }
 }
 
 // ─────────────────────────────────────────
@@ -645,7 +574,6 @@ function refreshCurrentPage() {
   if (cur === 'dashboard') dashPage.refresh();
   else if (cur === 'expenses') expensesPage.refresh();
   else if (cur === 'assets' || cur === 'goals' || cur === 'portfolio') portfolioPage.refresh();
-  else if (cur === 'zakat')    zakatPage.refresh();
 }
 
 function downloadFile(content, filename, type) {

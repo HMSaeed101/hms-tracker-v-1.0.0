@@ -1,7 +1,7 @@
 // HMS Tracker — Service Worker v1.0
 // Cache-first strategy, offline-first PWA
 
-const CACHE_NAME = 'hms-tracker-v1.1.3';
+const CACHE_NAME = 'hms-tracker-v1.2.0';
 const ASSETS = [
   './',
   'index.html',
@@ -24,7 +24,6 @@ const ASSETS = [
   'css/pages/assets.css',
   'css/pages/expenses.css',
   'css/pages/goals.css',
-  'css/pages/zakat.css',
   'js/main.js',
   'js/state.js',
   'js/data.js',
@@ -34,12 +33,10 @@ const ASSETS = [
   'js/stores/assetsStore.js',
   'js/stores/transactionsStore.js',
   'js/stores/goalsStore.js',
-  'js/stores/zakatStore.js',
   'js/stores/settingsStore.js',
   'js/pages/dashboard.js',
   'js/pages/portfolio.js',
   'js/pages/expenses.js',
-  'js/pages/zakat.js',
 ];
 
 // Install — cache all assets

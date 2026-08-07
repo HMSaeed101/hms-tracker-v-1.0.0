@@ -226,23 +226,7 @@
 					</div>
 				</div>
 
-				<div
-					class="zakat-nudge"
-					id="zakat-nudge"
-					style="display: none"
-					role="alert"
-				>
-					<span class="zakat-nudge__icon">☽</span>
-					<span class="zakat-nudge__text"
-						>Zakat due — time to purify your wealth.</span
-					>
-					<button
-						class="btn btn--sm btn--ghost"
-						onclick="location.hash = 'zakat'"
-					>
-						View
-					</button>
-				</div>
+
 
 				<div class="goals-ring-section card">
 					<div class="card__header">
@@ -410,141 +394,6 @@
 				</div>
 			</main>
 
-			<!-- Zakat -->
-			<main id="page-zakat" class="page" role="main">
-				<div class="zakat-hero">
-					<div class="zakat-hero__status" id="zakat-status-label">
-						Checking nisab…
-					</div>
-					<div class="zakat-hero__amount" id="zakat-due-amount">
-						Rs 0
-					</div>
-					<div class="zakat-hero__label">Zakat Due</div>
-					<div
-						class="zakat-hero__projection"
-						id="purification-projection"
-					></div>
-				</div>
-
-				<div class="nisab-card">
-					<div
-						class="card__title"
-						style="margin-bottom: var(--space-sm)"
-					>
-						Nisab Threshold
-					</div>
-
-					<div class="nisab-toggle">
-						<button
-							class="nisab-toggle-btn active"
-							id="nisab-gold-btn"
-						>
-							Gold (85g)
-						</button>
-						<button class="nisab-toggle-btn" id="nisab-silver-btn">
-							Silver (595g)
-						</button>
-					</div>
-
-					<div class="nisab-bar-labels">
-						<span class="caption text-muted"
-							>Eligible Assets:
-							<strong id="eligible-assets">Rs 0</strong></span
-						>
-						<span class="caption text-muted"
-							>Nisab: <strong id="nisab-value">Rs 0</strong></span
-						>
-					</div>
-
-					<div class="progress-bar-wrap nisab-bar-wrap">
-						<div
-							class="progress-bar"
-							id="nisab-progress"
-							style="width: 0%"
-						></div>
-					</div>
-				</div>
-
-				<!-- Hawl countdown -->
-
-				<div class="card" style="margin-bottom: var(--space-md)">
-					<div class="card__header">
-						<span class="card__title">Hawl (Lunar Year)</span>
-						<span class="caption text-muted">354 days</span>
-					</div>
-
-					<div class="card__body">
-						<div class="hawl-countdown" aria-label="Hawl countdown">
-							<div class="hawl-unit">
-								<div class="hawl-unit__value" id="hawl-months">
-									00
-								</div>
-								<div class="hawl-unit__label">Months</div>
-							</div>
-
-							<div class="hawl-divider">:</div>
-							<div class="hawl-unit">
-								<div class="hawl-unit__value" id="hawl-days">
-									00
-								</div>
-								<div class="hawl-unit__label">Days</div>
-							</div>
-						</div>
-						<div class="progress-bar-wrap" style="margin-top: var(--space-md)">
-							<div class="progress-bar progress-bar--accent" id="hawl-progress-bar" style="width: 0%"></div>
-						</div>
-						<div class="caption text-muted" id="hawl-progress-text" style="margin-top: 6px; text-align: center;">0% of Hawl Completed</div>
-					</div>
-				</div>
-
-				<!-- Zakat actions -->
-				<div class="btn-group" style="margin-bottom: var(--space-md)">
-					<button
-						class="btn btn--primary"
-						data-open-modal="log-payment-modal"
-					>
-						Log Payment
-					</button>
-					<button
-						class="btn btn--secondary"
-						data-open-modal="log-sadaqah-modal"
-					>
-						Sadaqah
-					</button>
-				</div>
-
-				<!-- Payment log -->
-				<div class="card" style="margin-bottom: var(--space-md)">
-					<div class="card__header">
-						<span class="card__title">Zakat Payments</span>
-						<button
-							class="btn btn--ghost btn--sm"
-							id="zakat-csv-btn"
-						>
-							Export CSV
-						</button>
-					</div>
-					<div class="card__body" style="padding: 0 var(--space-lg)">
-						<div id="zakat-payments-list"></div>
-					</div>
-				</div>
-
-				<!-- Sadaqah total -->
-				<div class="card" style="margin-bottom: var(--space-md)">
-					<div class="card__header">
-						<span class="card__title">Sadaqah This Year</span>
-					</div>
-					<div class="card__body" style="text-align: center">
-						<div class="sadaqah-total" id="sadaqah-total">Rs 0</div>
-						<div class="caption text-muted">
-							Voluntary giving — may Allah accept it
-						</div>
-					</div>
-				</div>
-
-				<button class="btn btn--danger btn--full" id="zakat-reset-btn">
-					Zakat Year Reset
-				</button>
 			</main>
 
 			<!-- FAB -->
@@ -647,24 +496,6 @@
 						<circle cx="12" cy="12" r="2"></circle>
 					</svg>
 					<span class="nav-item__label">Goals</span>
-				</button>
-				<button class="nav-item" data-route="zakat" aria-label="Zakat">
-					<svg
-						width="22"
-						height="22"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-					>
-						<path
-							d="M21 8.5C21 13.1 16.9 17 12 17C7.1 17 3 13.1 3 8.5C3 3.9 7.1 0 12 0C16.9 0 21 3.9 21 8.5Z"
-							transform="translate(0,3)"
-						></path>
-						<line x1="12" y1="17" x2="12" y2="21"></line>
-						<line x1="8" y1="21" x2="16" y2="21"></line>
-					</svg>
-					<span class="nav-item__label">Zakat</span>
 				</button>
 			</nav>
 		</div>
@@ -1480,165 +1311,6 @@
 		</div>
 
 		<!-- Log Zakat Payment Modal -->
-		<div
-			class="modal-backdrop"
-			id="log-payment-modal"
-			role="dialog"
-			aria-modal="true"
-		>
-			<div class="modal">
-				<div class="modal__header">
-					<h2 class="modal__title">Log Zakat Payment</h2>
-					<button
-						class="modal__close"
-						data-close-modal="log-payment-modal"
-						aria-label="Close"
-					>
-						<svg
-							width="18"
-							height="18"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2.5"
-						>
-							<line x1="18" y1="6" x2="6" y2="18"></line>
-							<line x1="6" y1="6" x2="18" y2="18"></line>
-						</svg>
-					</button>
-				</div>
-				<div class="modal__body">
-					<form id="log-payment-form">
-						<div class="form-group">
-							<label class="form-label">Amount (Rs)</label>
-							<div class="input-with-prefix">
-								<span class="input-prefix">Rs</span>
-								<input
-									class="form-input"
-									id="payment-amount"
-									name="amount"
-									type="number"
-									placeholder="0"
-									min="1"
-									step="1"
-									required
-								/>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="form-label" for="payment-recipient"
-								>Recipient / Organisation</label
-							>
-							<input
-								class="form-input"
-								id="payment-recipient"
-								name="recipient"
-								type="text"
-								placeholder="e.g. Local Masjid, Edhi Foundation"
-							/>
-						</div>
-						<div class="form-group">
-							<label class="form-label" for="payment-date"
-								>Date</label
-							>
-							<input
-								class="form-input"
-								id="payment-date"
-								name="date"
-								type="date"
-							/>
-						</div>
-						<button
-							class="btn btn--primary btn--full"
-							type="submit"
-						>
-							Record Payment
-						</button>
-					</form>
-				</div>
-			</div>
-		</div>
-
-		<!-- Log Sadaqah Modal -->
-		<div
-			class="modal-backdrop"
-			id="log-sadaqah-modal"
-			role="dialog"
-			aria-modal="true"
-		>
-			<div class="modal">
-				<div class="modal__header">
-					<h2 class="modal__title">Log Sadaqah</h2>
-					<button
-						class="modal__close"
-						data-close-modal="log-sadaqah-modal"
-						aria-label="Close"
-					>
-						<svg
-							width="18"
-							height="18"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2.5"
-						>
-							<line x1="18" y1="6" x2="6" y2="18"></line>
-							<line x1="6" y1="6" x2="18" y2="18"></line>
-						</svg>
-					</button>
-				</div>
-				<div class="modal__body">
-					<form id="log-sadaqah-form">
-						<div class="form-group">
-							<label class="form-label">Amount (Rs)</label>
-							<div class="input-with-prefix">
-								<span class="input-prefix">Rs</span>
-								<input
-									class="form-input"
-									id="sadaqah-amount"
-									name="amount"
-									type="number"
-									placeholder="0"
-									min="1"
-									step="1"
-									required
-								/>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="form-label" for="sadaqah-note"
-								>Note (optional)</label
-							>
-							<input
-								class="form-input"
-								id="sadaqah-note"
-								name="note"
-								type="text"
-								placeholder="Whoever you gave to, why…"
-							/>
-						</div>
-						<div class="form-group">
-							<label class="form-label" for="sadaqah-date"
-								>Date</label
-							>
-							<input
-								class="form-input"
-								id="sadaqah-date"
-								name="date"
-								type="date"
-							/>
-						</div>
-						<button
-							class="btn btn--primary btn--full"
-							type="submit"
-						>
-							Log Sadaqah
-						</button>
-					</form>
-				</div>
-			</div>
-		</div>
-
 		<!-- Rates Modal -->
 		<div
 			class="modal-backdrop"
@@ -1680,34 +1352,6 @@
 								type="number"
 								placeholder="278.5"
 								step="0.01"
-								min="1"
-							/>
-						</div>
-						<div class="form-group">
-							<label class="form-label" for="rate-gold-input"
-								>Gold Price (10g) in PKR</label
-							>
-							<input
-								class="form-input"
-								id="rate-gold-input"
-								name="gold10gPKR"
-								type="number"
-								placeholder="285000"
-								step="100"
-								min="1"
-							/>
-						</div>
-						<div class="form-group">
-							<label class="form-label" for="rate-silver-input"
-								>Silver Price (1g) in PKR</label
-							>
-							<input
-								class="form-input"
-								id="rate-silver-input"
-								name="silver1gPKR"
-								type="number"
-								placeholder="2800"
-								step="10"
 								min="1"
 							/>
 						</div>
@@ -1778,32 +1422,6 @@
 							aria-checked="false"
 							tabindex="0"
 						></div>
-					</div>
-
-					<div class="form-divider"></div>
-					<div class="form-toggle">
-						<div>
-							<div class="form-toggle__label">Zakat &amp; Sadaqah</div>
-							<div class="form-toggle__sub">
-								Track Nisab, Hawl year countdown, and Sadaqah totals
-							</div>
-						</div>
-						<div
-							class="toggle-switch"
-							id="zakat-toggle"
-							role="switch"
-							aria-checked="true"
-							tabindex="0"
-						></div>
-					</div>
-
-					<div class="form-divider"></div>
-					<div class="form-group">
-						<label class="form-label" for="reflection-style-select">Daily Reflection Style</label>
-						<select class="form-select" id="reflection-style-select">
-							<option value="spiritual">Spiritual (Rizq, Zakat, Baraka, Quranic Wisdom)</option>
-							<option value="general">General (Personal Finance &amp; Habits)</option>
-						</select>
 					</div>
 
 					<div class="form-divider"></div>

@@ -15,28 +15,25 @@ It is a Progressive Web App. Install it from your browser — no app store neede
 
 | Feature | Description |
 |---|---|
-| ◆ Your Capital Today | Live net worth |
-| ◆ Capital Velocity | +Rs X/day momentum |
-| ◆ Quick Log | Expense or income in 10s |
-| ◆ Capital Allocation | Every rupee conscious |
-| ◆ Goal tracker | AutoSweep rules |
-| ◆ Zakat calculator | Purification Projection |
-| ◆ Nisab tracker | Gold & silver standard |
-| ◆ Sadaqah log | Voluntary giving tracked |
-| ◆ AES-GCM encryption | PBKDF2 + PIN lock |
-| ◆ Offline-first | Service worker cached |
-| ◆ IndexedDB shadow | iOS eviction safe |
-| ◆ SVG progress rings | Goal visualization |
-| ◆ Capital Velocity sparkline | 30-day trend |
-| ◆ Dark mode first | Premium fintech feel |
+| ◆ Your Capital Today | Live net worth calculation |
+| ◆ Capital Velocity | +Rs X/day momentum metric |
+| ◆ Quick Log | Expense or income logging in 10s |
+| ◆ Capital Allocation | Intentional resource tracking |
+| ◆ Goal tracker | Auto-Sweep allocation rules |
+| ◆ AES-GCM encryption | PBKDF2 + PIN lock protection |
+| ◆ Offline-first | Service Worker PWA caching |
+| ◆ IndexedDB shadow | iOS eviction-resistant backup |
+| ◆ SVG progress rings | Visual target completion |
+| ◆ Capital Velocity sparkline | 30-day net worth trend |
+| ◆ Dark mode first | Premium fintech UI/UX feel |
 
 ---
 
 ## Design Philosophy
 
-Most finance apps treat money as a ledger. HMS Tracker treats it as capital — every rupee is a resource to deploy intentionally. The language reflects this: *Capital Deployed* not *Expense*. *Your Capital Today* not *Net Worth*. *Wealth Purification* not *Zakat Due*.
+Most finance apps treat money as a passive ledger. HMS Tracker treats it as active capital — every rupee is a resource to deploy intentionally. The language reflects this: *Capital Deployed* for expenses, *Your Capital Today* for net worth, and *Capital Velocity* for momentum.
 
-Built for a young Muslim entrepreneur in Pakistan who thinks in terms of compound growth, Islamic obligation, and long-term wealth — not just monthly budgets.
+Built for an entrepreneur in Pakistan who thinks in terms of compound growth, disciplined capital allocation, and long-term financial independence.
 
 ---
 

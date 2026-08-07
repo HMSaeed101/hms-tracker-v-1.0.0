@@ -56,8 +56,7 @@ export function buildEmptyStores() {
     assets:       { cash: [], physical: [], investments: [], liabilities: [] },
     transactions: [],
     goals:        [],
-    zakat:        { nisabStandard: 'gold', hawlStartDate: null, nisabReached: false, payments: [], sadaqah: [] },
-    settings:     { rates: { usdPKR: 278.5, gold10gPKR: 285000, silver1gPKR: 2800, lastUpdated: null }, theme: 'dark', lastExportDate: null, snapshots: [] },
+    settings:     { rates: { usdPKR: 278.5, lastUpdated: null }, theme: 'dark', lastExportDate: null, snapshots: [] },
   };
 }
 
@@ -126,7 +125,6 @@ function fillDefaults(stores) {
     assets:       { ...e.assets,    ...(stores.assets    || {}) },
     transactions: stores.transactions || [],
     goals:        stores.goals        || [],
-    zakat:        { ...e.zakat,     ...(stores.zakat     || {}) },
     settings:     { ...e.settings,  ...(stores.settings  || {}) },
   };
 }

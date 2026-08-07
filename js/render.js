@@ -59,7 +59,7 @@ render.toast = function(message, type = 'info', duration = 3000) {
 // ─────────────────────────────────────────
 // Dashboard
 // ─────────────────────────────────────────
-render.dashboard = function({ netWorth, velocity, snapshots, monthTotals, goals, zakatStatus, prompt }) {
+render.dashboard = function({ netWorth, velocity, snapshots, monthTotals, goals, prompt }) {
   const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
 
   // Net worth
@@ -106,17 +106,6 @@ render.dashboard = function({ netWorth, velocity, snapshots, monthTotals, goals,
 
   // Reflection
   if (prompt) set('reflection-text', prompt);
-
-  // Zakat nudge
-  const nudge = document.getElementById('zakat-nudge');
-  if (nudge) {
-    const show = zakatStatus?.nisabReached && zakatStatus?.hawlComplete && zakatStatus?.amountDue > 0;
-    nudge.style.display = show ? 'flex' : 'none';
-    if (show) {
-      const txt = nudge.querySelector('.zakat-nudge__text');
-      if (txt) txt.textContent = `Zakat due: ${formatPKRFull(zakatStatus.amountDue)} — time to purify your wealth.`;
-    }
-  }
 };
 
 // ─────────────────────────────────────────
@@ -404,73 +393,6 @@ render.goalsList = function(goals) {
       <div class="completed-goals">${completed.map(renderGoal).join('')}</div>`;
   }
   container.innerHTML = html;
-};
-
-// ─────────────────────────────────────────
-// Zakat page
-// ─────────────────────────────────────────
-render.zakatPage = function({ status, summary, projection }) {
-  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
-
-  set('zakat-due-amount', formatPKRFull(status.amountDue || 0));
-
-  const statusLabel = !status.nisabReached
-    ? 'Below Nisab — Not Obligatory'
-    : !status.hawlComplete
-    ? 'Nisab Reached — Hawl in Progress'
-    : 'Zakat Due — Purify Your Wealth';
-  set('zakat-status-label', statusLabel);
-
-  set('purification-projection', projection
-    ? `At current velocity, next purification in ~${projection} days`
-    : 'Update your rates and add transactions to see a projection');
-
-  // Nisab bar
-  const pct = status.nisab > 0 ? Math.min(100, (status.eligible / status.nisab) * 100) : 0;
-  const barEl = document.getElementById('nisab-progress');
-  if (barEl) { barEl.style.width = pct + '%'; barEl.className = `progress-bar progress-bar--${progressColor(pct)}`; }
-
-  set('nisab-value',     formatPKRFull(status.nisab));
-  set('eligible-assets', formatPKRFull(status.eligible));
-
-  render.hawlCountdown(status.daysRemaining || 0);
-
-  // Payments list
-  const paymentsEl = document.getElementById('zakat-payments-list');
-  if (paymentsEl) {
-    paymentsEl.innerHTML = summary.payments.length
-      ? summary.payments.map(p => `
-        <div class="payment-log-item">
-          <div>
-            <div class="payment-log-item__recipient">${p.recipient || 'Unnamed'}</div>
-            <div class="payment-log-item__date">${formatDate(p.date)}</div>
-          </div>
-          <div style="display:flex;align-items:center;gap:8px">
-            <span class="payment-log-item__amount">${formatPKRFull(p.amount)}</span>
-            <button class="item-action-btn" data-action="delete-payment" data-id="${p.id}" aria-label="Delete">${TRASH_ICON}</button>
-          </div>
-        </div>`).join('')
-      : `<div class="caption text-muted" style="padding:var(--space-md)">No payments logged yet</div>`;
-  }
-
-  set('sadaqah-total', formatPKRFull(summary.sadaqah));
-};
-
-render.hawlCountdown = function(daysRemaining) {
-  const days   = Math.max(0, daysRemaining);
-  const months = Math.floor(days / 30);
-  const rem    = days % 30;
-  const d = document.getElementById('hawl-days');
-  const m = document.getElementById('hawl-months');
-  if (d) d.textContent = String(rem).padStart(2, '0');
-  if (m) m.textContent = String(months).padStart(2, '0');
-
-  const daysElapsed = Math.max(0, 354 - days);
-  const pct = Math.min(100, Math.round((daysElapsed / 354) * 100));
-  const bar = document.getElementById('hawl-progress-bar');
-  const text = document.getElementById('hawl-progress-text');
-  if (bar) bar.style.width = pct + '%';
-  if (text) text.textContent = `${pct}% of Hawl Completed (${daysElapsed} of 354 days)`;
 };
 
 // ─────────────────────────────────────────

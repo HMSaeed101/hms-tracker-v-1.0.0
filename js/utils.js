@@ -113,46 +113,6 @@ export function historyToPoints(history, width = 200, height = 40) {
   }).join(' ');
 }
 
-// ── Zakat calculation ──
-export function calcZakatEligible(assets) {
-  const cash   = (assets.cash || []).reduce((s,c) => s + (c.amountPKR || 0), 0);
-  const invest = (assets.investments || []).reduce((s,i) => s + (i.amountPKR || 0), 0);
-  const liab   = (assets.liabilities || []).reduce((s,l) => s + (l.amountPKR || 0), 0);
-  // Physical assets excluded (not zakatable by default)
-  return Math.max(0, cash + invest - liab);
-}
-
-export function calcZakatDue(eligible) {
-  return eligible * 0.025; // 2.5%
-}
-
-export function calcNisab(rates, standard = 'gold') {
-  // Gold: 85g — rates.gold10gPKR is per 10g
-  if (standard === 'gold') return (rates.gold10gPKR / 10) * 85;
-  // Silver: 595g — rates.silver1gPKR is per 1g
-  return rates.silver1gPKR * 595;
-}
-
-export function calcPurificationProjection(zakatDue, velocity) {
-  if (!velocity || velocity <= 0 || !zakatDue) return null;
-  // Days until current net worth grows by zakatDue
-  return Math.ceil(zakatDue / velocity);
-}
-
-// ── Hijri year helpers (approximate) ──
-export function currentHijriYear() {
-  const now = new Date();
-  // Julian day number
-  const jd = Math.floor((now.getTime() / 86400000) + 2440587.5);
-  const l = jd - 1948440 + 10632;
-  const n = Math.floor((l - 1) / 10631);
-  const ll = l - 10631*n + 354;
-  const j = Math.floor((10985 - ll) / 5316) * Math.floor((50 * ll) / 17719)
-          + Math.floor(ll / 5670) * Math.floor((43 * ll) / 15238);
-  const year = 30*n + Math.floor((8*j + 1) / 60) - 30;
-  return year;
-}
-
 // ── Progress bar color ──
 export function progressColor(pct) {
   if (pct >= 70) return 'high';

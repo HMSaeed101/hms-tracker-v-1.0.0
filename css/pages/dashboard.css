@@ -118,28 +118,7 @@
   max-width: 480px;
 }
 
-/* Zakat Alert — Non-decorative */
-.zakat-nudge {
-  background: transparent;
-  border: 1px solid var(--color-success);
-  border-radius: var(--radius-sm);
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 32px;
-}
 
-.zakat-nudge__icon { font-size: 18px; color: var(--color-success); }
-
-.zakat-nudge__text {
-  flex: 1;
-  font-size: 13px;
-  color: var(--color-success);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
 
 /* Rates area — Compact data */
 .rates-row {

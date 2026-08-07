@@ -18,7 +18,6 @@
   <div class="hint">
     <strong>Running:</strong><br>
     &nbsp;&nbsp;• <code>netWorthCalc.test.js</code> — net worth, velocity, sparkline<br>
-    &nbsp;&nbsp;• <code>zakatCalc.test.js</code> — eligible assets, zakat due, nisab, projection<br>
     &nbsp;&nbsp;• <code>currencyConverter.test.js</code> — formatting, parsing, stale rates<br>
     <br>
     <strong>Serve with:</strong> <code>npx serve .</code> from the project root, then open
@@ -37,7 +36,6 @@
 
     (async () => {
       await runSuite('netWorthCalc',      './netWorthCalc.test.js');
-      await runSuite('zakatCalc',         './zakatCalc.test.js');
       await runSuite('currencyConverter', './currencyConverter.test.js');
       console.log('\n══ All suites complete ══');
     })();
