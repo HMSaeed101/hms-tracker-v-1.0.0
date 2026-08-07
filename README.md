@@ -9,7 +9,7 @@ Built by Saeed — CS Student, UET Taxila — 2026
 
 ## What it is
 
-HMS Tracker tracks cash, bank balances, physical items, stock/crypto investments, and financial goals — all in one interface, all encrypted on-device. No spreadsheets, no cloud accounts, no third-party tracking. It's a Progressive Web App: installable straight from the browser, works fully offline, zero server, zero sync, zero telemetry.
+This Finance Tracker tracks cash, bank balances, physical items, stock/crypto investments, and financial goals — all in one interface, all encrypted on-device. No spreadsheets, no cloud accounts, no third-party tracking. It's a Progressive Web App: installable straight from the browser, works fully offline, zero server, zero sync, zero telemetry.
 
 For the product philosophy and full feature set, see the **[Product Vision](../../wiki/Product-Vision)** wiki page.
 
@@ -32,7 +32,7 @@ Why these choices were made is documented in the **[Architecture Decisions](../.
 ## Quick start
 
 ```bash
-git clone https://github.com/[username]/hms-tracker.git
+git clone https://github.com/hmsaeed-dev/hms-tracker.git
 cd hms-tracker
 
 # Service workers require HTTP, not file://
@@ -54,7 +54,7 @@ open http://localhost:3000
 ```bash
 git push origin main
 # Repo Settings → Pages → Deploy from branch: main / (root)
-# Live at: https://[username].github.io/hms-tracker
+# Live at: https://hmsaeed-dev.github.io/hms-tracker
 ```
 
 ## Project structure
