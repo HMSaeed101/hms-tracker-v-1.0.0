@@ -1,6 +1,6 @@
 // js/main.js — app entry. Runs after DOMContentLoaded.
 import { isFirstRun, isUnlocked, setupPin, unlockWithPin, clearMasterKey,
-         exportJson, importJson, changePin } from './data.js';
+         exportJson, importJson, changePin, wipeAllData } from './data.js';
 import { onSaveHook } from './state.js';
 import { assetsStore }       from './stores/assetsStore.js';
 import { transactionsStore } from './stores/transactionsStore.js';
@@ -538,8 +538,20 @@ function initSettings() {
     } catch { render.toast('Wrong current PIN', 'error'); }
   });
 
-  // Export
-  on('export-json-btn', 'click', handleExport);
+  // Factory Reset / Wipe All Data
+  on('factory-reset-btn', 'click', async () => {
+    if (!confirm('DANGER: Are you sure you want to PERMANENTLY WIPE ALL DATA and reset HMS Tracker?\n\nThis will delete all stored assets, transactions, goals, and PIN settings. This action CANNOT be undone!')) {
+      return;
+    }
+    const check = prompt('Type RESET to confirm deleting all data:');
+    if (check !== 'RESET') {
+      render.toast('Reset cancelled', 'info');
+      return;
+    }
+    await wipeAllData();
+    render.toast('All data wiped — resetting app', 'warning');
+    setTimeout(() => location.reload(), 1000);
+  });
 
   // Import
   on('import-json-btn', 'click', () => document.getElementById('import-file-input')?.click());

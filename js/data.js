@@ -159,3 +159,15 @@ async function idbGet() {
     });
   } catch { return null; }
 }
+
+export async function wipeAllData() {
+  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem('hms_salt');
+  localStorage.removeItem('hms_theme');
+  clearMasterKey();
+  try {
+    const db = await idbOpen();
+    const tx = db.transaction(IDB_STORE, 'readwrite');
+    tx.objectStore(IDB_STORE).clear();
+  } catch {}
+}

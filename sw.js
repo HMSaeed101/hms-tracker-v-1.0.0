@@ -1,7 +1,7 @@
 // HMS Tracker — Service Worker v1.0
 // Cache-first strategy, offline-first PWA
 
-const CACHE_NAME = 'hms-tracker-v1.1.2';
+const CACHE_NAME = 'hms-tracker-v1.1.3';
 const ASSETS = [
   './',
   'index.html',
@@ -71,7 +71,7 @@ self.addEventListener('fetch', e => {
         const clone = response.clone();
         caches.open(CACHE_NAME).then(cache => cache.put(e.request, clone));
         return response;
-      }).catch(() => caches.match('/index.html'));
+      }).catch(() => caches.match('index.html') || caches.match('./index.html'));
     })
   );
 });
