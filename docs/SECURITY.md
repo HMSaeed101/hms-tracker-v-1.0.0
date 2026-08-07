@@ -11,7 +11,7 @@
 | Shoulder surfing PIN | 4-digit keypad, dots not digits. Auto-lock on background. |
 | Brute-force PIN | 3 attempts → 30s cooldown. 10,000 combinations × 100k PBKDF2 = ~1 year per device. |
 | iOS WebKit localStorage eviction | IndexedDB shadow copy. Restore from IDB on missing localStorage blob. |
-| Data loss (accidental) | PIN-gated JSON export. Zakat Year Reset archives before clearing. |
+| Data loss (accidental) | PIN-gated JSON export. Double-confirmation Factory Reset archives before clearing. |
 | XSS injection | CSP header via `_headers`. No `innerHTML` with user data unescaped. |
 | Forgotten PIN | Data unrecoverable by design. Export prompt nudges regular backups. |
 
@@ -118,7 +118,7 @@ showPinScreen('unlock');
 | `hms_enc` | AES-GCM encrypted JSON blob (entire app state) |
 | `hms_salt` | PBKDF2 salt as hex string (not secret — needed to rederive key) |
 | `hms_theme` | `'dark'` or `'light'` (not sensitive) |
-| `zakat_archive_*` | Archived Zakat year JSON (encrypted separately) |
+| `backup_archive_*` | Archived JSON export backup |
 
 **Never stored:** The PIN, the derived master key, or any plaintext sensitive data.
 

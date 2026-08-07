@@ -1,5 +1,5 @@
 # HMS Tracker — Data Schema
-`File 2 of 12 | v1.0 | March 2026`
+`File 2 of 12 | v1.2 | March 2026`
 
 ---
 
@@ -19,7 +19,7 @@ Every `localStorage` save is an AES-GCM encrypted blob. When decrypted, the JSON
 
 ---
 
-## 2. Five Store Schemas
+## 2. Four Store Schemas
 
 ### 2.1 `stores.assets`
 
@@ -79,7 +79,6 @@ Every `localStorage` save is an AES-GCM encrypted blob. When decrypted, the JSON
 
 **Expense categories:** `Myself | Food & Chai | Education | Unexpected`
 **Income sources:** `Pocket money | Freelance | Gift | Other`
-**Allocation types:** `goal | reserve | reinvest | null`
 
 ### 2.3 `stores.goals`
 
@@ -101,35 +100,13 @@ Every `localStorage` save is an AES-GCM encrypted blob. When decrypted, the JSON
 ```
 
 **Goal types:** `short | long`
-**autoSweep:** `null` if not set, or `{ percent: Number, thresholdPKR: Number }`
 
-### 2.4 `stores.zakat`
-
-```json
-{
-  "nisabStandard": "gold",
-  "hawlStartDate": "2026-01-01",
-  "nisabReached": true,
-  "payments": [
-    { "id": "zp001", "amount": 12000, "date": "2026-03-01", "recipient": "Local Masjid" }
-  ],
-  "sadaqah": [
-    { "id": "sd001", "amount": 500, "date": "2026-03-10", "note": "Friday giving" }
-  ]
-}
-```
-
-**nisabStandard:** `gold | silver`
-**hawlStartDate:** ISO date string when nisab was first crossed, or `null`
-
-### 2.5 `stores.settings`
+### 2.4 `stores.settings`
 
 ```json
 {
   "rates": {
     "usdPKR": 278.5,
-    "gold10gPKR": 285000,
-    "silver1gPKR": 2800,
     "lastUpdated": "2026-03-14"
   },
   "theme": "dark",
@@ -148,35 +125,17 @@ Every `localStorage` save is an AES-GCM encrypted blob. When decrypted, the JSON
 
 ## 3. Derived Values (Never Stored)
 
-These are always computed from stored data by `utils.js`:
+These are computed from stored data by `utils.js`:
 
 | Derived | Formula | Location |
 |---|---|---|
 | Net Worth | `sum(cash) + sum(physical.current) + sum(investments) - sum(liabilities)` | `calcNetWorth()` |
 | Capital Velocity | `(latestSnapshot - 30dAgoSnapshot) / 30` | `calcVelocity()` |
-| Zakat Eligible | `sum(cash) + sum(investments) - sum(liabilities)` | `calcZakatEligible()` |
-| Zakat Due | `eligible × 0.025` | `calcZakatDue()` |
-| Nisab (gold) | `(gold10gPKR / 10) × 85` | `calcNisab()` |
-| Nisab (silver) | `silver1gPKR × 595` | `calcNisab()` |
 | P&L % | `(current - purchase) / purchase × 100` | `render.assetsList()` |
 
 ---
 
-## 4. Validation Rules
-
-| Field | Rule |
-|---|---|
-| `amount` / `amountPKR` | `Number`, > 0 for expenses/income; any sign for adjustments |
-| `date` | ISO date string `YYYY-MM-DD`; defaults to today |
-| `category` | Must be one of the 4 expense categories |
-| `source` | Must be one of the 4 income sources |
-| `targetPKR` | > 0 |
-| `percent` (autoSweep) | 1–100 |
-| `nisabStandard` | `'gold'` or `'silver'` |
-
----
-
-## 5. Migration
+## 4. Migration
 
 When `data.version !== SCHEMA_VERSION`, `migrateData()` runs:
 
@@ -188,10 +147,7 @@ function migrateData(data) {
     assets:       { ...empty.assets,    ...(stores.assets    || {}) },
     transactions: stores.transactions   || [],
     goals:        stores.goals          || [],
-    zakat:        { ...empty.zakat,     ...(stores.zakat     || {}) },
     settings:     { ...empty.settings,  ...(stores.settings  || {}) },
   };
 }
 ```
-
-New fields in the empty schema are merged in. Existing data is preserved. A non-intrusive toast informs the user.

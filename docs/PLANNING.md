@@ -5,29 +5,23 @@
 
 ## Product Vision
 
-A personal finance OS for a young Muslim entrepreneur in Pakistan. Offline-first, encrypted, no cloud accounts required. Treats money as capital — every rupee tracked with intention.
+A personal finance OS built for disciplined capital management and financial net worth tracking. Offline-first, encrypted, no cloud accounts required. Treats money as capital — every rupee tracked with intention.
 
-**Target user:** Me (Saeed). One user. Built to last.
+**Target user:** Me (Saeed). One user. Built for speed, security, and long-term durability.
 
 ---
 
-## MVP Scope (v1.0)
+## Active Scope (v1.2)
 
 ### Must Have
-- Net worth (assets − liabilities)
-- Capital Velocity (+Rs X/day)
-- Quick Log: expense, income, adjustment
-- Goal tracker with Auto-Sweep
-- Zakat calculator with nisab, hawl, projection
-- AES-GCM PIN encryption
-- JSON export/import
-- Offline PWA
-
-### Won't Have in v1.0
-- Spending insights (v1.1)
-- Walk & Reflect journal (v1.1)
-- Multi-device sync (v2.0)
-- Biometric unlock (v2.0)
+- Net worth calculation (assets − liabilities)
+- Capital Velocity (+Rs X/day momentum)
+- Quick Log: expense, income, adjustment in < 10s
+- Goal tracker with Auto-Sweep rules
+- AES-GCM PIN encryption & auto-lock
+- Factory Reset & Data Wipe mechanism
+- JSON encrypted export/import
+- Offline PWA Service Worker caching
 
 ---
 
@@ -38,16 +32,4 @@ A personal finance OS for a young Muslim entrepreneur in Pakistan. Offline-first
 | assetsStore | addCash, addPhysicalItem, addInvestment, addLiability, remove, update, snapshotNetWorth |
 | transactionsStore | addExpense, addIncome, addAdjustment, getAll(month?), getMonthlyTotals |
 | goalsStore | add, allocate, setAutoSweep, complete, update, remove, processAutoSweep |
-| zakatStore | getStatus, logPayment, logSadaqah, resetYear, exportCSV, getAnnualSummary |
 | settingsStore | getRates, setRates, getTheme, setTheme, addSnapshot, getSnapshots |
-
----
-
-## 30-Day Sprint
-
-| Week | Focus |
-|---|---|
-| Week 1 | HTML shell, CSS system, PIN screen, data.js, state.js |
-| Week 2 | All 5 stores, utils.js, router.js |
-| Week 3 | render.js, 5 page controllers, all modals |
-| Week 4 | PWA (SW + manifest), tests, docs, deploy |

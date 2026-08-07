@@ -92,21 +92,20 @@
 
 ---
 
-## ADR-006: Gold nisab as default (not silver)
+## ADR-006: Modular Store Isolation
 
 **Status:** Accepted
 
-**Context:** Two nisab standards exist in Islamic jurisprudence — gold (85g) and silver (595g). Silver is lower and would make more users zakatable.
+**Context:** The application model layer manages multiple domain entities (assets, transactions, goals, settings).
 
-**Decision:** Gold nisab as the default, silver available as a toggle.
+**Decision:** 4 isolated data stores (`assetsStore`, `transactionsStore`, `goalsStore`, `settingsStore`) with zero cross-store dependencies.
 
 **Rationale:**
-- Contemporary majority scholarly opinion (jumhur) favours gold standard
-- Yusuf al-Qaradawi and most modern fatawa bodies recommend gold
-- Silver standard may be too low given current silver/gold price divergence
-- User can toggle to silver if their madhab/scholar prefers it
+- High cohesion and strict separation of concerns
+- Independent unit testing for each data domain
+- Page controllers handle multi-domain aggregations safely
 
-**Consequences:** Some users following Hanafi silver standard must manually switch. Toggle is one tap.
+**Consequences:** Page controllers aggregate data across stores rather than stores querying each other directly.
 
 ---
 
@@ -121,7 +120,7 @@
 **Rationale:**
 - Zero server config required
 - Works on GitHub Pages out of the box
-- Deep links work (share `https://user.github.io/hms-tracker/#zakat`)
+- Deep links work (share `https://user.github.io/hms-tracker/#portfolio`)
 
 **Consequences:** URLs contain `#`. Not as clean as `/goals`, but acceptable for a personal app.
 
